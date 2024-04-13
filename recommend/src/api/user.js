@@ -1,24 +1,48 @@
 import request from '@/utils/request'
+import axios from 'axios';
 
 export function login(data) {
-  return request({
-    url: '/vue-admin-template/user/login',
+  console.log('data', data)
+  return axios({
+    url: '/api/auth/user/doLogin',
     method: 'post',
     data
+  }).then(response => {
+    console.log('1')
+    console.log('Response in login function:', response)
+    return response
+  }).catch(error => {
+    console.error('Error in login function:', error)
   })
 }
 
-export function getInfo(token) {
-  return request({
-    url: '/vue-admin-template/user/info',
+export function getInfo(dto , satoken) {
+  console.log('dto', dto)
+  return axios({
+    url: '/api/auth/user/getUserInfo',
+    method: 'post',
+    withCredentials: true,
+    headers: {
+      'content-type': 'application/json',
+      'satoken': satoken // 关键代码, 注意参数名字是 satoken
+    },
+    data: dto
+  })
+}
+
+export function logout(name, satoken) {
+  console.log('name', name)
+  console.log('satoken', satoken)
+  return axios({
+    url: '/api/auth/user/logOut',
     method: 'get',
-    params: { token }
-  })
-}
-
-export function logout() {
-  return request({
-    url: '/vue-admin-template/user/logout',
-    method: 'post'
+    withCredentials: true,
+    headers: {
+      // 'content-type': 'application/x-www-form-urlencoded',
+      'satoken': satoken // 关键代码, 注意参数名字是 satoken
+    },
+    params: {
+      userName: name
+    }
   })
 }

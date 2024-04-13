@@ -76,8 +76,74 @@ export default {
         const fileExtension = fileName.slice(((fileName.lastIndexOf(".") - 1) >>> 0) + 2);
 
         if (allowedFormats.includes(`.${fileExtension}`)) {
-          this[`${fileType}UploadStatus`] = '上传成功！';
-          this.$router.push({ name: '匹配结果' });
+          this[`${fileType}UploadStatus`] = '正在上传...';
+
+          // 创建 FormData 对象并附加文件
+          let formData = new FormData();
+          formData.append('file', file);
+
+          // 使用 axios 发送请求
+          axios.post('/api/algorithm/resumeData/addAndReturnSuggestions', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+            .then(response => {
+              // 处理成功响应
+              console.log('上传成功', response);
+              this.data = JSON.parse(response.data.data);
+              console.log("下面是信息：" + this.data);
+              this[`${fileType}UploadStatus`] = '上传成功！';
+              this.handleResponse(this.data);
+              // this.updateData();
+              //
+              // // 显示建议文本
+              // document.getElementById('suggestionText').textContent = this.data.suggestion;
+              // console.info(this.data.suggestion);
+              // // 准备雷达图的数据
+              // var radarChartData = {
+              //   legend: {
+              //     data: ['用户评分']
+              //   },
+              //   radar: {
+              //     // 雷达图的指示器，用来表示各个维度
+              //     indicator: [
+              //       {name: '教育经历', max: 10},
+              //       {name: '专业技能', max: 10},
+              //       {name: '工作经历', max: 10},
+              //       {name: '团队合作能力', max: 10},
+              //       {name: '获奖经历', max: 10}
+              //     ]
+              //   },
+              //   series: [{
+              //     name: '评分',
+              //     type: 'radar',
+              //     // 数据值
+              //     data: [
+              //       {
+              //         value: [
+              //           this.data.educationExperienceScore,
+              //           this.data.professionalSkillsScore,
+              //           this.data.workExperienceScore,
+              //           this.data.teamworkAbilityScore,
+              //           this.data.awardExperienceScore
+              //         ],
+              //         name: '用户评分'
+              //       }
+              //     ]
+              //   }]
+              // };
+              //
+              // // 使用指定的配置项和数据显示雷达图
+              // var radarChart = echarts.init(document.getElementById('radarChart'));
+              // radarChart.setOption(radarChartData);
+            })
+            .catch(error => {
+              // 处理错误响应
+              console.error('上传失败', error);
+              this[`${fileType}UploadStatus`] = '上传失败，请重试。';
+            });
+
         } else {
           this[`${fileType}UploadStatus`] = `请使用规定格式上传（${allowedFormats.join(', ')}）`;
         }

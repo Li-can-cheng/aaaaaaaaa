@@ -1,9 +1,10 @@
 import request from '@/utils/request'
+import axios from "axios";
 
 /*
 菜单管理相关的API请求函数
 */
-const api_name = '/enterprise/enterprise'
+const api_name = '/api/algorithm/enterprise'
 
 export default {
 
@@ -16,7 +17,7 @@ export default {
     },
 
     listEnterpriseVo(data) {
-        return request({
+        return axios({
             url: `${api_name}/listEnterpriseVo`,
             method: "get",
             params: data
@@ -32,7 +33,7 @@ export default {
 
     /**
      * 从redis中获取企业的注册信息
-     * @returns 
+     * @returns
      */
     listAllEnterpriseRegisterVoFromRedis() {
         return request({
@@ -43,8 +44,8 @@ export default {
 
     /**
      * 通过企业的注册申请
-     * @param {*} enterpriseRegisterVo 
-     * @returns 
+     * @param {*} enterpriseRegisterVo
+     * @returns
      */
     passEnterpriseRegister(enterpriseRegisterVo) {
         return request({
@@ -56,8 +57,8 @@ export default {
 
     /**
      * 拒绝企业的注册申请
-     * @param {*} enterpriseRegisterVo 
-     * @returns 
+     * @param {*} enterpriseRegisterVo
+     * @returns
      */
     rejectEnterpriseRegister(enterpriseRegisterVo) {
         return request({

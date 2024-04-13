@@ -31,12 +31,16 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     port: port,
-    open: true,
-    overlay: {
-      warnings: false,
-      errors: true
-    },
-    before: require('./mock/mock-server.js')
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000', // 后端服务地址
+        ws: true, // 是否代理websockets
+        changeOrigin: true, // 是否改变源地址，这里为true表示替换，使得请求看起来像从`http://localhost:5000`发起的
+        pathRewrite: {
+          '^/api': '' // 路径重写，这里理解为调用`/api`会被代理到`http://localhost:5000/`
+        }
+      }
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

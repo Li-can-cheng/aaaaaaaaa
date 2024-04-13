@@ -2,29 +2,40 @@
   <div class="body">
     <div class="content">
       <div class="left">
-        <img src="@/assets/login/img2.png" class="people p-animtion" alt="people">
-        <img src="@/assets/login/img1.png" class="sphere s-animtion" alt="sphere">
+        <img src="@/assets/login/img2.png" class="people p-animtion"
+             alt="people">
+        <img src="@/assets/login/img1.png" class="sphere s-animtion"
+             alt="sphere">
       </div>
       <div class="right">
         <div class="form-wrappepr">
           <div style="display: block;width: 100%;">
-            <h1 style="margin-bottom: 5vh;font-weight: bold;display: block;" v-if="pageType === 0">欢迎进入职位推荐系统
+            <h1 style="margin-bottom: 5vh;font-weight: bold;display: block;"
+                v-if="pageType === 0">欢迎进入职位推荐系统
             </h1>
-            <h1 style="margin-bottom: 5vh;font-weight: bold;display: block;" v-if="pageType === 1">欢迎进行用户注册</h1>
+            <h1 style="margin-bottom: 5vh;font-weight: bold;display: block;"
+                v-if="pageType === 1">欢迎进行用户注册</h1>
           </div>
-          <el-form class="login-form" :rules="loginRules" ref="loginForm" :model="loginForm" label-width="0"
+          <el-form class="login-form" :rules="loginRules" ref="loginForm"
+                   :model="loginForm" label-width="0"
                    v-if="pageType === 0"
           >
-            <input type="text" class="inputs user" placeholder="请输入用户名" v-model="loginForm.username">
-            <input type="password" class="inputs pwd" placeholder="请输入密码" v-model="loginForm.password">
+            <input type="text" class="inputs user" placeholder="请输入用户名"
+                   v-model="loginForm.username">
+            <input type="password" class="inputs pwd" placeholder="请输入密码"
+                   v-model="loginForm.password">
 
             <div style="display: flex;margin: 0px;padding: 0px;">
-              <input type="text" class="inputs user" placeholder="请输入验证码" v-model="loginForm.verificationCode"
+              <input type="text" class="inputs user" placeholder="请输入验证码"
+                     v-model="loginForm.verificationCode"
                      style="display: flex;margin: 0px;"
               >
-              <el-tooltip class="item" effect="dark" content="验证码看不清？点击图片可以刷新" placement="right-end">
+              <el-tooltip class="item" effect="dark"
+                          content="验证码看不清？点击图片可以刷新"
+                          placement="right-end">
                 <img :src="'data:image/png;base64,' + verifyCodeImg" alt="image"
-                     style="border-radius: 10px;margin-left: 20px;" @click="freshVerificationCode()"
+                     style="border-radius: 10px;margin-left: 20px;"
+                     @click="freshVerificationCode()"
                 />
               </el-tooltip>
             </div>
@@ -33,14 +44,18 @@
               <span class="tips">忘记密码</span>
             </div>
 
-            <button v-if="pageType === 0" @click="handleLogin()" class="custom-button">登 录</button>
+            <button v-if="pageType === 0" @click="handleLogin()"
+                    class="custom-button">登 录
+            </button>
 
             <div>
                             <span style="float: left">
-                                <el-button type="text" @click="enterEnterpriseRegist()">企业注册</el-button>
+                                <el-button type="text"
+                                           @click="enterEnterpriseRegist()">企业注册</el-button>
                             </span>
               <span style="float: right">
-                                没有账号？<el-button type="text" @click="enterRegister()">点击注册</el-button>
+                                没有账号？<el-button type="text"
+                                                    @click="enterRegister()">点击注册</el-button>
                             </span>
             </div>
 
@@ -48,16 +63,21 @@
           </el-form>
 
           <!-- 注册表单 -->
-          <el-form class="regist-form" :rules="loginRules" ref="registForm" :model="registForm" label-width="0"
+          <el-form class="regist-form" :rules="loginRules" ref="registForm"
+                   :model="registForm" label-width="0"
                    v-if="pageType === 1"
           >
-            <input type="text" class="inputs user" placeholder="请输入用户名" v-model="registForm.username"
+            <input type="text" class="inputs user" placeholder="请输入用户名"
+                   v-model="registForm.username"
                    @change="usernameCheck()"
             >
-            <input type="password" class="inputs pwd" placeholder="请输入密码" v-model="registForm.password">
-            <input type="text" class="inputs user" placeholder="请输入邮箱" v-model="registForm.mail">
+            <input type="password" class="inputs pwd" placeholder="请输入密码"
+                   v-model="registForm.password">
+            <input type="text" class="inputs user" placeholder="请输入邮箱"
+                   v-model="registForm.mail">
             <div style="display: flex;margin: 0px;padding: 0px;">
-              <input type="text" class="inputs user" placeholder="请输入验证码" v-model="registForm.code"
+              <input type="text" class="inputs user" placeholder="请输入验证码"
+                     v-model="registForm.code"
                      style="display: flex;margin: 0px;"
               >
               <el-button type="text" class="custom-button"
@@ -68,32 +88,39 @@
             </div>
 
 
-            <button v-if="pageType === 1" class="custom-button" @click="handleRegist()">注 册</button>
+            <button v-if="pageType === 1" class="custom-button"
+                    @click="handleRegist()">注 册
+            </button>
             <div>
                             <span style="float: left">
-                                <el-button type="text" @click="enterEnterpriseRegist()">企业注册</el-button>
+                                <el-button type="text"
+                                           @click="enterEnterpriseRegist()">企业注册</el-button>
                             </span>
               <span style="float: right">
-                                已有账号？<el-button type="text" @click="enterLogin()">点击登录</el-button>
+                                已有账号？<el-button type="text"
+                                                    @click="enterLogin()">点击登录</el-button>
                             </span>
             </div>
 
           </el-form>
 
           <!-- 企业注册表单 -->
-          <el-form class="enterprise-regist-form" ref="entertpriseRegistForm" :model="registForm" label-width="0"
+          <el-form class="enterprise-regist-form" ref="entertpriseRegistForm"
+                   :model="registForm" label-width="0"
                    v-if="pageType === 2"
           >
             <div class="logo">
               <div class="block" @click="openAvatarChangeDialog()">
-                <el-image style="width:150px;height: 150px" v-if="!entertpriseRegistForm.logo" fit="contain"
+                <el-image style="width:150px;height: 150px"
+                          v-if="!entertpriseRegistForm.logo" fit="contain"
                           lazy
                 >
                   <div slot="error" class="image-slot">
                     <i class="el-icon-picture-outline"></i>
                   </div>
                 </el-image>
-                <el-image style="height: 150px" v-if="entertpriseRegistForm.logo"
+                <el-image style="height: 150px"
+                          v-if="entertpriseRegistForm.logo"
                           :src="entertpriseRegistForm.logo" :fit="contain"
                 >
                   <div slot="error" class="image-slot">
@@ -103,14 +130,19 @@
               </div>
             </div>
 
-            <input type="text" class="inputs user" placeholder="请输入企业名称" v-model="entertpriseRegistForm.name">
-            <input type="password" class="inputs pwd" placeholder="请输入密码" v-model="entertpriseRegistForm.password">
-            <input type="text" class="inputs user" placeholder="请输入企业描述" v-model="entertpriseRegistForm.detail"
+            <input type="text" class="inputs user" placeholder="请输入企业名称"
+                   v-model="entertpriseRegistForm.name">
+            <input type="password" class="inputs pwd" placeholder="请输入密码"
+                   v-model="entertpriseRegistForm.password">
+            <input type="text" class="inputs user" placeholder="请输入企业描述"
+                   v-model="entertpriseRegistForm.detail"
                    @click="writeEnterpriseDetail()"
             >
-            <input type="text" class="inputs user" placeholder="请输入邮箱" v-model="entertpriseRegistForm.mail">
+            <input type="text" class="inputs user" placeholder="请输入邮箱"
+                   v-model="entertpriseRegistForm.mail">
             <div style="display: flex;margin: 0px;padding: 0px;">
-              <input type="text" class="inputs user" placeholder="请输入验证码" v-model="entertpriseRegistForm.code"
+              <input type="text" class="inputs user" placeholder="请输入验证码"
+                     v-model="entertpriseRegistForm.code"
                      style="display: flex;margin: 0px;"
               >
               <el-button type="text" class="custom-button"
@@ -121,32 +153,44 @@
             </div>
 
 
-            <button v-if="pageType === 2" class="custom-button" @click="handleEnterpriseRegist()">企 业 注 册</button>
+            <button v-if="pageType === 2" class="custom-button"
+                    @click="handleEnterpriseRegist()">企 业 注 册
+            </button>
             <div>
                             <span style="float: right">
-                                企业已注册？<el-button type="text" @click="enterLogin()">回到登录</el-button>
+                                企业已注册？<el-button type="text"
+                                                      @click="enterLogin()">回到登录</el-button>
                             </span>
             </div>
 
             <!-- 企业详情 -->
-            <el-dialog title="企业详情" :visible.sync="enterpriseDetailVisible" width="30%" append-to-body>
-              <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="entertpriseRegistForm.detail">
+            <el-dialog title="企业详情" :visible.sync="enterpriseDetailVisible"
+                       width="30%" append-to-body>
+              <el-input type="textarea" :rows="5" placeholder="请输入内容"
+                        v-model="entertpriseRegistForm.detail">
               </el-input>
               <span slot="footer" class="dialog-footer">
-                                <el-button type="primary" @click="enterpriseDetailVisible = false">确 定</el-button>
+                                <el-button type="primary"
+                                           @click="enterpriseDetailVisible = false">确 定</el-button>
                             </span>
             </el-dialog>
             <!-- 头像上传对话框 -->
-            <el-dialog title="上传logo" :visible.sync="avatarChangeDialogVisible" width="400px" append-to-body>
+            <el-dialog title="上传logo"
+                       :visible.sync="avatarChangeDialogVisible" width="400px"
+                       append-to-body>
               <div style="display: flex;justify-content: center;">
                 <el-upload class="avatar-uploader"
                            :action="ossPath"
-                           :data="dataObj" list-type="picture" :multiple="false" :show-file-list="showFileList"
-                           :file-list="fileList" :before-upload="beforeUpload" :on-remove="handleRemove"
-                           :on-success="handleUploadSuccess" :on-preview="handlePreview"
+                           :data="dataObj" list-type="picture" :multiple="false"
+                           :show-file-list="showFileList"
+                           :file-list="fileList" :before-upload="beforeUpload"
+                           :on-remove="handleRemove"
+                           :on-success="handleUploadSuccess"
+                           :on-preview="handlePreview"
                 >
                   <div class="centerDiv">
-                    <div class="display: flex;justify-content: center;align-items: center;">
+                    <div
+                      class="display: flex;justify-content: center;align-items: center;">
                       <i class="el-icon-plus avatar-uploader-icon"
                          style="font-size: 50px;margin: 50px;"
                       ></i>
@@ -208,20 +252,20 @@ export default {
       ////登录
       loginForm: {
         //用户名
-        username: 'admin',
+        username: 'a',
         //密码
-        password: '111111',
+        password: '123',
         rememberPwd: false,
         uuid: '',
         verificationCode: ''
       },
       loginRules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' }
+          {required: true, message: '请输入用户名', trigger: 'blur'}
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 1, message: '密码长度最少为6位', trigger: 'blur' }
+          {required: true, message: '请输入密码', trigger: 'blur'},
+          {min: 1, message: '密码长度最少为6位', trigger: 'blur'}
         ]
       },
       ///验证码
@@ -253,7 +297,7 @@ export default {
         //企业名称
         name: '',
         //企业密码
-        password:'',
+        password: '',
         //企业描述
         detail: '',
         //邮箱
@@ -295,7 +339,7 @@ export default {
 
     this.freshVerificationCode()
 
-    console.log("ossPath:"+this.ossPath)
+    console.log("ossPath:" + this.ossPath)
   },
 
   computed: {
@@ -318,12 +362,12 @@ export default {
       ]
     },
     showFileList: {
-      get: function() {
+      get: function () {
         return (
           this.value !== null && this.value !== '' && this.value !== undefined
         )
       },
-      set: function(newValue) {
+      set: function (newValue) {
       }
     }
   },
@@ -332,11 +376,11 @@ export default {
     /**
      * 开启星球的动画事件
      */
-    document.querySelector('.people').addEventListener('animationend', function() {
+    document.querySelector('.people').addEventListener('animationend', function () {
       this.classList.remove('p-animtion')
       this.classList.add('p-other-animtion')
     })
-    document.querySelector('.sphere').addEventListener('animationend', function() {
+    document.querySelector('.sphere').addEventListener('animationend', function () {
       this.classList.remove('s-animtion')
       this.classList.add('s-other-animtion')
     })
@@ -378,29 +422,24 @@ export default {
     wxLogin(token) {
       this.$store
         .dispatch('user/weixinLogin', token)
-      this.$router.push({ path: this.redirect || '/' })
+      this.$router.push({path: this.redirect || '/'})
       //进入首页的时候刷新一下首页，不然样式会残留(相当于f5)
       location.reload(true)
     },
     handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
+      this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.loginForm.uuid = this.uuid
-          console.log('this.loginForm:' + JSON.stringify(this.loginForm))
-          this.$store
-            .dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({
-                path: this.redirect || '/'
-              })
-              //进入首页的时候刷新一下首页，不然样式会残留(相当于f5)
-              location.reload(true)
-              this.loading = false
-            })
-            .catch(() => {
-              this.loading = false
-            })
+          console.log(this.loginForm)
+          this.$store.dispatch('user/login', this.loginForm).then(() => {
+            console.log('aaa')
+            this.$router.push({path: this.redirect || '/'})
+//进入首页的时候刷新一下首页，不然样式会残留(相当于f5)
+            location.reload(true)
+            this.loading = false
+          }).catch(() => {
+            this.loading = false
+          })
         } else {
           console.log('error submit!!')
           return false
