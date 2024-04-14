@@ -13,7 +13,7 @@
         </el-form-item>
       </el-form> -->
       <div class="titleDiv">
-        <span style="margin-right: 20px; margin-left: 5px; font-weight: bold">企业列表</span>
+        <span style="margin-right: 20px; margin-left: 5px; font-weight: bold">企业岗位列表</span>
         <el-input
           v-model="dataForm.key"
           placeholder="参数名"
@@ -45,15 +45,15 @@
             @selection-change="selectionChangeHandle"
           >
             <el-table-column type="selection" header-align="center" align="center" width="50" />
-            <el-table-column label="企业logo" width="100">
-              <template slot-scope="scope">
-                <!-- <el-avatar shape="square" size="medium" :src="scope.row.logo"></el-avatar> -->
-                <el-image style="height: 50px" :src="scope.row.logo" fit="contain" class="image" />
-              </template>
-            </el-table-column>
+<!--            <el-table-column label="企业logo" width="100">-->
+<!--              <template slot-scope="scope">-->
+<!--                &lt;!&ndash; <el-avatar shape="square" size="medium" :src="scope.row.logo"></el-avatar> &ndash;&gt;-->
+<!--                <el-image style="height: 50px" :src="scope.row.logo" fit="contain" class="image" />-->
+<!--              </template>-->
+<!--            </el-table-column>-->
             <el-table-column prop="name" header-align="left" align="left" label="名称" width="180" />
             <el-table-column prop="title" header-align="left" align="left" label="岗位类型" width="150" />
-            <el-table-column prop="detail" header-align="left" align="left" label="企业详情" width="680"/>
+            <el-table-column prop="detail" header-align="left" align="left" label="岗位详情" width="680"/>
             <el-table-column prop="address" header-align="left" align="left" label="地址" width="150" />
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
               <template slot-scope="scope">
@@ -121,7 +121,7 @@ export default {
           if (data.code === 200 && data.data && data.data.page) {
             this.dataList = data.data.list || [];
             this.totalPage = data.data.page.totalCount || 0;
-            console.log('企业列表:', JSON.stringify(this.dataList));
+            console.log('企业岗位列表:', JSON.stringify(this.dataList));
           } else {
             console.error('未能获取到有效的数据:', data.msg || '无错误消息');
             this.dataList = [];
@@ -129,7 +129,7 @@ export default {
           }
         })
         .catch(error => {
-          console.error('请求企业列表数据失败:', error);
+          console.error('请求企业岗位列表数据失败:', error);
           this.dataList = [];
           this.totalPage = 0;
         })

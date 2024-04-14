@@ -11,18 +11,18 @@
 			<div class="contains" :width="nxw">
 				<div class="search">
 					<div style="width: 70%;margin: 0 auto; text-align: center">
-						<el-row span="10">
-							<el-col>
-								<!-- <linSearch @query="onQueryChange" placeholder="请输入职位名称" ref="searchKeyword" /> -->
-								<el-input v-model="searchKeyword" @change="onQueryChange" placeholder="请输入职位名称"
-									size="large" clearable>
-									<el-button @click="onQueryChange" slot="append" icon="el-icon-search">查询</el-button>
-								</el-input>
-							</el-col>
-						</el-row>
+<!--						<el-row span="10">-->
+<!--							<el-col>-->
+<!--								&lt;!&ndash; <linSearch @query="onQueryChange" placeholder="请输入职位名称" ref="searchKeyword" /> &ndash;&gt;-->
+<!--								<el-input v-model="searchKeyword" @change="onQueryChange" placeholder="请输入职位名称"-->
+<!--									size="large" clearable>-->
+<!--									<el-button @click="onQueryChange" slot="append" icon="el-icon-search">查询</el-button>-->
+<!--								</el-input>-->
+<!--							</el-col>-->
+<!--						</el-row>-->
 					</div>
 					<div class="s_hot">
-						热门职位搜索：
+						热门职位：
 						<span class="s_hot_like" @click="searchKeyword = 'java'">&nbsp;Java开发</span>
 						<span class="s_hot_like" @click="searchKeyword = '数据'">大数据平台开发</span>
 						<span class="s_hot_like" @click="searchKeyword = 'PHP'">PHP</span>
@@ -59,7 +59,7 @@ export default {
 <style lang="scss" scoped>
 .home {
 	&-container {
-		margin: 30px;
+		margin: 50px;
 	}
 
 	&-text {
@@ -70,7 +70,7 @@ export default {
 }
 
 .scaled {
-	height: 500px;
+	height: 480px;
 	margin: center;
 
 	.down {

@@ -2,7 +2,7 @@
   <div class="enterpriseContainer">
     <div class="contentDiv">
       <div class="titleDiv">
-        <span style="margin-right: 20px; margin-left: 5px; font-weight: bold">员工列表</span>
+        <span style="margin-right: 20px; margin-left: 5px; font-weight: bold">用户列表</span>
         <el-input
           v-model="dataForm.key"
           placeholder="参数名"
@@ -34,11 +34,21 @@
             @selection-change="selectionChangeHandle"
           >
             <el-table-column type="selection" header-align="center" align="center" width="50" />
-            <el-table-column prop="userName" header-align="left" align="left" label="姓名" width="180" />
-            <el-table-column prop="sex" header-align="left" align="left" label="性别" width="180" />
+            <el-table-column prop="userName" header-align="left" align="left" label="用户名" width="180" />
+            <el-table-column prop="nickName" header-align="left" align="left" label="姓名" width="180" />
+            <el-table-column
+              prop="sex"
+              header-align="left"
+              align="left"
+              label="性别"
+              width="180"
+              :formatter="formatSex"
+            />
             <el-table-column prop="age" header-align="left" align="left" label="年龄" width="180" />
+            <el-table-column prop="phone" header-align="left" align="left" label="手机号" width="180" />
             <el-table-column prop="email" header-align="left" align="left" label="邮箱" width="180" />
-            <el-table-column prop="nickName" header-align="left" align="left" label="昵称" width="180" />
+            <el-table-column prop="roles" header-align="left" align="left" label="角色" width="180" />
+
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
               <template slot-scope="scope">
                 <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
@@ -47,14 +57,17 @@
             </el-table-column>
           </el-table>
         </div>
-        <pagination
+        <el-pagination
           v-show="totalPage > 0"
           :total="totalPage"
-          :page.sync="pageIndex"
-          :limit.sync="pageSize"
-          @pagination="getDataList"
-        />
+          :current-page.sync="pageIndex"
+          :page-size.sync="pageSize"
+          @current-change="currentChangeHandle"
+          @size-change="sizeChangeHandle"
+          layout="total, sizes, prev, pager, next, jumper">
+        </el-pagination>
       </div>
+
 
     </div>
     <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList" />
@@ -79,13 +92,21 @@ export default {
       totalPage: 0,
       dataListLoading: false,
       dataListSelections: [],
-      addOrUpdateVisible: false
+      addOrUpdateVisible: false,
+      tableData: [
+        { sex: 1 },
+        { sex: 0 }
+        // 其他数据
+      ]
     }
   },
   created() {
     this.getDataList()
   },
   methods: {
+    formatSex(row, column, value, index) {
+      return value === 1 ? '男' : '女'
+    },
     // 获取数据列表
     getDataList() {
       this.dataListLoading = true
@@ -102,7 +123,7 @@ export default {
           if (data.code === 200 && data.data && data.data.page) {
             this.dataList = data.data.list || []
             this.totalPage = data.data.page.totalCount || 0
-            console.log('企业列表:', JSON.stringify(this.dataList))
+            console.log('岗位列表:', JSON.stringify(this.dataList))
           } else {
             console.error('未能获取到有效的数据:', data.msg || '无错误消息')
             this.dataList = []
@@ -110,7 +131,7 @@ export default {
           }
         })
         .catch(error => {
-          console.error('请求企业列表数据失败:', error)
+          console.error('请求岗位列表数据失败:', error)
           this.dataList = []
           this.totalPage = 0
         })
@@ -118,31 +139,42 @@ export default {
           this.dataListLoading = false
         })
     },
-    // 删除
-    deleteHandle(id) {
-      var ids = id ? [id] : this.dataListSelections.map(item => {
-        return item.id
-      })
-      this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        enterpriseApi.deleteBatch(ids)
-          .then(res => {
-            if (res.code === this.ResultCode.success) {
-              this.getDataList()
-              this.$message({
-                message: '操作成功',
-                type: 'success',
-                duration: 1500
-              })
-            } else {
-              this.$message.error(data.msg)
-            }
-          })
-      })
+    // 每页数
+    sizeChangeHandle(val) {
+      this.pageSize = val
+      this.pageIndex = 1
+      this.getDataList()
+    },
+    // 当前页
+    currentChangeHandle(val) {
+      this.pageIndex = val
+      this.getDataList()
     }
+    // // 删除
+    // deleteHandle(id) {
+    //   var ids = id ? [id] : this.dataListSelections.map(item => {
+    //     return item.id
+    //   })
+    //   this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
+    //     confirmButtonText: '确定',
+    //     cancelButtonText: '取消',
+    //     type: 'warning'
+    //   }).then(() => {
+    //     enterpriseApi.deleteBatch(ids)
+    //       .then(res => {
+    //         if (res.code === this.ResultCode.success) {
+    //           this.getDataList()
+    //           this.$message({
+    //             message: '操作成功',
+    //             type: 'success',
+    //             duration: 1500
+    //           })
+    //         } else {
+    //           this.$message.error(data.msg)
+    //         }
+    //       })
+    //   })
+    // }
   }
 }
 </script>

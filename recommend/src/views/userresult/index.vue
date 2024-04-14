@@ -12,6 +12,13 @@
         </el-dialog>
       </div>
     </div>
+    <div class="container">
+      <div class="xing" v-if="showTable">
+        <p>您对该推荐的满意度为
+          <xing></xing>
+        </p>
+      </div>
+    </div>
     <div class="lower-section">
       <div class="dashboard-container">
         <div class="job_recommend">
@@ -21,13 +28,7 @@
           </el-form>
         </div>
       </div>
-      <div class="container">
-        <div class="xing" v-if="showTable">
-          <p>您对该推荐的满意度为
-            <xing></xing>
-          </p>
-        </div>
-      </div>
+
     </div>
   </div>
 </template>
@@ -42,7 +43,7 @@ export default {
   // eslint-disable-next-line vue/order-in-components
   data() {
     return {
-      id: '',
+      id: 10,
       recommendations: [],
       isDialogVisible: false, // 控制弹出框可见性
       dialogTitle: '能力评价',
@@ -60,29 +61,49 @@ export default {
 
     job_recommend() {
       this.showTable = true;
-      
-      var data = {
-        id: this.id // 使用 this.uid 获取当前的 uid 值
-      }
 
-      var config = {
+      // 准备第一个请求的数据和配置
+      var data = {
+        id: this.id // 这里假设this.id已经是正确的uid值
+      };
+
+      var preDo = {
         method: 'post',
-        url: 'http://localhost:3012/recommendations/resume_converter', // 确保 URL 是正确的，这里添加了 http:// 前缀
+        url: 'api/algorithm/recommendations/resume_converter', // 确保URL是正确的，并添加了http://前缀
         headers: {
           'Content-Type': 'application/json'
         },
         data: data
-      }
+      };
 
-      axios(config)
+      // 发送第一个请求
+      axios(preDo)
         .then((response) => {
-          console.log(JSON.stringify(response.data))
-          this.recommendations = response.data.data
+          console.log(JSON.stringify(response.data));
+          this.recommendations = response.data.data;
+
+          // 准备第二个请求的数据和配置
+          var getRecommendations = {
+            method: 'post',
+            url: '/api/algorithm/recommendations/get_recommendations',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            data: data
+          };
+
+          // 在第一个请求成功后发送第二个请求
+          return axios(getRecommendations);
+        })
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+          this.recommendations = JSON.parse(response.data.data).data;
         })
         .catch((error) => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     }
+
   }
 }
 
@@ -113,14 +134,15 @@ export default {
 .container {
   position: relative;
   width: 100%;
-  height: 100vh;
+  //height: 100vh;
   /* Adjust this according to your layout */
 }
 
 .xing {
   position: absolute;
-  top: -145px;
+  top: -50px;
   right: 0;
   width: 20%;
 }
+
 </style>
