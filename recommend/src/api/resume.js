@@ -1,10 +1,10 @@
 import request from '@/utils/request'
-import axios from 'axios';
+import axios from 'axios'
 
 function resume_converter(uid) {
   var data = {
-    uid: 'uid',
-  };
+    uid: 'uid'
+  }
 
   var config = {
     method: 'post',
@@ -16,10 +16,11 @@ function resume_converter(uid) {
   }
 
   return axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
+    .then(function(response) {
+      console.log(JSON.stringify(response.data))
     })
-    .catch(function (error) {
-      console.log(error);
-    });
+    .catch(function(error) {
+      console.log(error)
+    })
 }
+

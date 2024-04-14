@@ -1,34 +1,60 @@
 <template>
   <div class="enterpriseContainer">
     <div class="contentDiv">
+
+      <!-- <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+        <el-form-item>
+          <el-input v-model="dataForm.key" placeholder="参数名" clearable></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="getDataList()">查询</el-button>
+          <el-button type="primary" @click="addOrUpdateHandle()">新增</el-button>
+          <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        </el-form-item>
+      </el-form> -->
       <div class="titleDiv">
         <span style="margin-right: 20px; margin-left: 5px; font-weight: bold">企业列表</span>
-        <el-input v-model="dataForm.key" placeholder="参数名" clearable style="width: 150px; margin-right: 10px"
-          @keyup.enter.native="getDataList" size="small" />
+        <el-input
+          v-model="dataForm.key"
+          placeholder="参数名"
+          clearable
+          style="width: 150px; margin-right: 10px"
+          size="small"
+          @keyup.enter.native="getDataList"
+        />
         <el-button type="primary" icon="el-icon-search" size="mini" @click="getDataList()">查询</el-button>
       </div>
       <div class="toolDiv">
         <el-button type="text" size="small" @click="addOrUpdateHandle()">
-          <i class="iconfont icon-tianjia" style="margin-right: 3px"></i>添加</el-button>
-        <el-button id="button-danger" type="text" icon="el-icon-delete" size="small"
-          :disabled="dataListSelections.length <= 0" @click="deleteHandle()">批量删除</el-button>
+          <i class="iconfont icon-tianjia" style="margin-right: 3px" />添加</el-button>
+        <el-button
+          id="button-danger"
+          type="text"
+          icon="el-icon-delete"
+          size="small"
+          :disabled="dataListSelections.length <= 0"
+          @click="deleteHandle()"
+        >批量删除</el-button>
       </div>
       <div class="tableDisplayDiv">
         <div class="tableDiv">
-          <el-table :data="dataList" v-loading="dataListLoading" @selection-change="selectionChangeHandle"
-            style="width: 100%;">
-            <el-table-column type="selection" header-align="center" align="center" width="50">
-            </el-table-column>
-            <el-table-column label="企业logo" width="150">
+          <el-table
+            v-loading="dataListLoading"
+            :data="dataList"
+            style="width: 100%;"
+            @selection-change="selectionChangeHandle"
+          >
+            <el-table-column type="selection" header-align="center" align="center" width="50" />
+            <el-table-column label="企业logo" width="100">
               <template slot-scope="scope">
                 <!-- <el-avatar shape="square" size="medium" :src="scope.row.logo"></el-avatar> -->
-                <el-image style="height: 50px" :src="scope.row.logo" fit="contain" class="image"></el-image>
+                <el-image style="height: 50px" :src="scope.row.logo" fit="contain" class="image" />
               </template>
             </el-table-column>
-            <el-table-column prop="name" header-align="left" align="left" label="名称" width="180">
-            </el-table-column>
-            <el-table-column prop="detail" header-align="left" align="left" label="企业详情">
-            </el-table-column>
+            <el-table-column prop="name" header-align="left" align="left" label="名称" width="180" />
+            <el-table-column prop="title" header-align="left" align="left" label="岗位类型" width="150" />
+            <el-table-column prop="detail" header-align="left" align="left" label="企业详情" width="680"/>
+            <el-table-column prop="address" header-align="left" align="left" label="地址" width="150" />
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
               <template slot-scope="scope">
                 <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
@@ -37,12 +63,20 @@
             </el-table-column>
           </el-table>
         </div>
-        <pagination v-show="totalPage > 0" :total="totalPage" :page.sync="pageIndex" :limit.sync="pageSize"
-          @pagination="getDataList" />
-      </div>
 
+      </div>
+      <el-pagination
+        v-show="totalPage > 0"
+        :total="totalPage"
+        :current-page.sync="pageIndex"
+        :page-size.sync="pageSize"
+        @current-change="currentChangeHandle"
+        @size-change="sizeChangeHandle"
+        layout="total, sizes, prev, pager, next, jumper">
+      </el-pagination>
     </div>
-    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+    <!-- 弹窗, 新增 / 修改 -->
+    <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList" />
   </div>
 </template>
 
@@ -50,6 +84,9 @@
 import enterpriseApi from '@/api/enterprise/enterprise'
 import AddOrUpdate from './enterprise-add-or-update'
 export default {
+  components: {
+    AddOrUpdate
+  },
   data() {
     return {
       dataForm: {
@@ -58,14 +95,11 @@ export default {
       dataList: [],
       pageIndex: 1,
       pageSize: 10,
-      totalPage: 0,
+      totalPage: 1,
       dataListLoading: false,
       dataListSelections: [],
       addOrUpdateVisible: false
     }
-  },
-  components: {
-    AddOrUpdate
   },
   created() {
     this.getDataList()
@@ -73,26 +107,37 @@ export default {
   methods: {
     // 获取数据列表
     getDataList() {
-      this.dataListLoading = true
-      let params = {
+      this.dataListLoading = true;
+      const params = {
         'page': this.pageIndex,
         'limit': this.pageSize,
-        'key': this.dataForm.key
-      }
-      // console.log(JSON.stringify(params))
+        // 'key': this.dataForm.key
+      };
+
       enterpriseApi.listEnterpriseVo(params)
         .then(res => {
-          // console.log(JSON.stringify(res))
-          if (res.code === this.ResultCode.success) {
-            this.dataList = res.page.list
-            this.totalPage = res.page.totalCount
+          console.log('API response:', res);
+          const data = res.data;
+          if (data.code === 200 && data.data && data.data.page) {
+            this.dataList = data.data.list || [];
+            this.totalPage = data.data.page.totalCount || 0;
+            console.log('企业列表:', JSON.stringify(this.dataList));
           } else {
-            this.dataList = []
-            this.totalPage = 0
+            console.error('未能获取到有效的数据:', data.msg || '无错误消息');
+            this.dataList = [];
+            this.totalPage = 0;
           }
-          this.dataListLoading = false
         })
+        .catch(error => {
+          console.error('请求企业列表数据失败:', error);
+          this.dataList = [];
+          this.totalPage = 0;
+        })
+        .finally(() => {
+          this.dataListLoading = false;
+        });
     },
+
     // 每页数
     sizeChangeHandle(val) {
       this.pageSize = val
@@ -132,7 +177,7 @@ export default {
               this.$message({
                 message: '操作成功',
                 type: 'success',
-                duration: 1500,
+                duration: 1500
               })
             } else {
               this.$message.error(data.msg)
@@ -155,6 +200,7 @@ export default {
     border-radius: 5px;
     padding: 1px;
     height: 100%;
+    margin-bottom: 20px;
 
     .titleDiv {
       display: flex;

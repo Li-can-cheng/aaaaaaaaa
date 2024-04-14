@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import axios from 'axios';
+import axios from 'axios'
 
 export function login(data) {
   console.log('data', data)
@@ -16,7 +16,7 @@ export function login(data) {
   })
 }
 
-export function getInfo(dto , satoken) {
+export function getInfo(dto, satoken) {
   console.log('dto', dto)
   return axios({
     url: '/api/auth/user/getUserInfo',
@@ -46,3 +46,19 @@ export function logout(name, satoken) {
     }
   })
 }
+/*
+菜单管理相关的API请求函数
+*/
+const api_name = '/api/auth/user'
+
+export default {
+
+  listEnterpriseVo(data) {
+    return axios({
+      url: `${api_name}/listUser`,
+      method: 'get',
+      params: data
+    })
+  }
+}
+

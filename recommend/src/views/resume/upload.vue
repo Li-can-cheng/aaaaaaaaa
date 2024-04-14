@@ -3,20 +3,19 @@
     <div class="resume-upload-container">
       <div class="upload-section word-upload">
         <h2>上传 Word 文件</h2>
-        <img class="image-container" src="@/assets/resume/word.png" />
+        <img class="image-container" src="@/assets/resume/word.png">
         <label for="word-file" class="file-label">选择 Word 文件</label>
-        <input id="word-file" type="file" @change="uploadWordResume" accept=".doc, .docx" style="display: none" />
+        <input id="word-file" type="file" accept=".doc, .docx" style="display: none" @change="uploadWordResume">
         <p v-if="wordUploadStatus">{{ wordUploadStatus }}</p>
       </div>
 
-
-      <div class="divider"></div>
+      <div class="divider" />
 
       <div class="upload-section pdf-upload">
         <h2>上传 PDF 文件</h2>
-        <img class="image-container" src="@/assets/resume/pdf.jpg" />
+        <img class="image-container" src="@/assets/resume/pdf.jpg">
         <label for="pdf-file" class="file-label">选择 pdf 文件</label>
-        <input id="pdf-file" type="file" @change="uploadPdfResume" accept=".pdf" style="display: none" />
+        <input id="pdf-file" type="file" accept=".pdf" style="display: none" @change="uploadPdfResume">
         <p v-if="pdfUploadStatus">{{ pdfUploadStatus }}</p>
       </div>
     </div>
@@ -38,8 +37,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  name: 'resume',
+  name: 'Resume',
   data() {
     return {
       wordUploadStatus: '',
@@ -58,43 +59,43 @@ export default {
         { value: '选项10', label: '硬件工程师' },
         { value: '选项11', label: '其他' }
       ],
-      value: '',
+      value: ''
     }
   },
   methods: {
     uploadWordResume(event) {
-      this.validateAndUpload(event, 'word', ['.doc', '.docx']);
+      this.validateAndUpload(event, 'word', ['.doc', '.docx'])
     },
     uploadPdfResume(event) {
-      this.validateAndUpload(event, 'pdf', ['.pdf']);
+      this.validateAndUpload(event, 'pdf', ['.pdf'])
     },
     validateAndUpload(event, fileType, allowedFormats) {
-      const file = event.target.files[0];
+      const file = event.target.files[0]
 
       if (file) {
-        const fileName = file.name;
-        const fileExtension = fileName.slice(((fileName.lastIndexOf(".") - 1) >>> 0) + 2);
+        const fileName = file.name
+        const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2)
 
         if (allowedFormats.includes(`.${fileExtension}`)) {
-          this[`${fileType}UploadStatus`] = '正在上传...';
+          this[`${fileType}UploadStatus`] = '正在上传...'
 
           // 创建 FormData 对象并附加文件
-          let formData = new FormData();
-          formData.append('file', file);
+          const formData = new FormData()
+          formData.append('file', file)
 
           // 使用 axios 发送请求
           axios.post('/api/algorithm/resumeData/addAndReturnSuggestions', formData, {
             headers: {
-              'Content-Type': 'multipart/form-data',
-            },
+              'Content-Type': 'multipart/form-data'
+            }
           })
             .then(response => {
               // 处理成功响应
-              console.log('上传成功', response);
-              this.data = JSON.parse(response.data.data);
-              console.log("下面是信息：" + this.data);
-              this[`${fileType}UploadStatus`] = '上传成功！';
-              this.handleResponse(this.data);
+              console.log('上传成功', response)
+              this.data = JSON.parse(response.data.data)
+              console.log('下面是信息：' + this.data)
+              this[`${fileType}UploadStatus`] = '上传成功！'
+              this.handleResponse(this.data)
               // this.updateData();
               //
               // // 显示建议文本
@@ -140,32 +141,31 @@ export default {
             })
             .catch(error => {
               // 处理错误响应
-              console.error('上传失败', error);
-              this[`${fileType}UploadStatus`] = '上传失败，请重试。';
-            });
-
+              console.error('上传失败', error)
+              this[`${fileType}UploadStatus`] = '上传失败，请重试。'
+            })
         } else {
-          this[`${fileType}UploadStatus`] = `请使用规定格式上传（${allowedFormats.join(', ')}）`;
+          this[`${fileType}UploadStatus`] = `请使用规定格式上传（${allowedFormats.join(', ')}）`
         }
       }
     },
     downloadResumeTemplate() {
-      const resumeTemplatePath = process.env.BASE_URL + '简历模板.doc'; // 请根据实际情况替换文件名
+      const resumeTemplatePath = process.env.BASE_URL + '简历模板.doc' // 请根据实际情况替换文件名
       // 创建一个链接元素
-      const link = document.createElement('a');
+      const link = document.createElement('a')
       // 设置链接的 href 属性为简历模板文件的路径
-      link.href = resumeTemplatePath;
+      link.href = resumeTemplatePath
       // 设置链接的下载属性为简历模板文件的文件名
-      link.download = '简历模板.doc'; // 请根据实际情况替换文件名
+      link.download = '简历模板.doc' // 请根据实际情况替换文件名
       // 将链接添加到文档中
-      document.body.appendChild(link);
+      document.body.appendChild(link)
       // 触发点击事件
-      link.click();
+      link.click()
       // 删除链接元素
-      document.body.removeChild(link);
+      document.body.removeChild(link)
     }
-  },
-};
+  }
+}
 </script>
 
 <style scoped>
