@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+// import request from '@/utils/request'
 import axios from 'axios'
 
 export function login(data) {
@@ -6,9 +6,9 @@ export function login(data) {
   return axios({
     url: '/api/auth/user/doLogin',
     method: 'post',
-    data
+    data: data
   }).then(response => {
-    console.log('1')
+    console.log('11111111111111111111111111111')
     console.log('Response in login function:', response)
     return response
   }).catch(error => {

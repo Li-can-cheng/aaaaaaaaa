@@ -2,6 +2,7 @@ import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 import Cookies from 'js-cookie'
+import store from '@/store';
 
 const getDefaultState = () => {
   return {
@@ -12,6 +13,13 @@ const getDefaultState = () => {
     introduction: '' // 新增
   }
 }
+const getters = {
+  token: state => state.token,
+  name: state => state.name,
+  avatar: state => state.avatar,
+  roles: state => state.roles,
+  introduction: state => state.introduction
+};
 
 const state = getDefaultState()
 
@@ -47,16 +55,19 @@ const actions = {
     return new Promise((resolve, reject) => {
       console.log('aaa')
       login({ userName: username.trim(), password: password }).then(response => {
-        console.log(response)
+        console.log('aaaaaaaaaaaaaab', response)
         const { data } = response.data
         console.log(data)
-        commit('SET_TOKEN', data.tokenValue)
         commit('SET_NAME', username.trim())
-        console.log(state.name)
+        commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
+        commit('SET_INTRODUCTION', 'I am a super administrator')// 权限设置
+        commit('SET_ROLES', ['admin'])// 权限设置
+        console.log('aaaaaaaaaaaaaaaaaaaaa',state)
         setToken(data.tokenValue)
         Cookies.set('satoken', data.tokenValue, { expires: 700 }) // 例如这里设置cookie过期时间为7天
         console.log('666', Cookies.get('satoken'))
         console.log('1')
+        commit('SET_TOKEN', data.tokenValue)
         resolve()
       }).catch(error => {
         console.error('Error in Promise:', error)
@@ -68,8 +79,11 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
+      console.log('Cookies.get(satoken):', Cookies.get('satoken'))
+      console.log('store.getters.name:', store.getters.name)
+      // stop()
       // getInfo(state.token).then(response => {
-      getInfo({ 'userName': 'a' }, Cookies.get('satoken')).then(response => {
+      getInfo({ 'userName': store.getters.name }, Cookies.get('satoken')).then(response => {
         const { data } = response
 
         console.log('data:', data)
@@ -91,7 +105,7 @@ const actions = {
         commit('SET_ROLES', roles) // 权限设置
         commit('SET_AVATAR', avatar)
         commit('SET_INTRODUCTION', introduction)// 权限设置
-        resolve(data)
+        // resolve(data)
       }).catch(error => {
         reject(error)
       })
@@ -99,13 +113,13 @@ const actions = {
   },
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout('a', Cookies.get('satoken')).then((response) => { // 传入Cookies
+      logout('admin', Cookies.get('satoken')).then((response) => { // 传入Cookies
         console.log('response', response)
         // Cookies.remove('satoken') // 退出登录时清除Cookies
         // commit('SET_ROLES', []) //权限设置
         removeToken() // must remove  token  first
         resetRouter()
-        Cookies.set('satoken', '') // 退出登录时清除Cookies
+        // Cookies.set('satoken', '') // 退出登录时清除Cookies
         commit('RESET_STATE')
         resolve()
       }).catch(error => {
@@ -130,5 +144,6 @@ export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
+  getters
 }

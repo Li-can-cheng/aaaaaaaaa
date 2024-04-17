@@ -47,28 +47,28 @@
               placeholder="请输入密码"
             >
 
-            <div style="display: flex;margin: 0px;padding: 0px;">
-              <input
-                v-model="loginForm.verificationCode"
-                type="text"
-                class="inputs user"
-                placeholder="请输入验证码"
-                style="display: flex;margin: 0px;"
-              >
-              <el-tooltip
-                class="item"
-                effect="dark"
-                content="验证码看不清？点击图片可以刷新"
-                placement="right-end"
-              >
-                <img
-                  :src="'data:image/png;base64,' + verifyCodeImg"
-                  alt="image"
-                  style="border-radius: 10px;margin-left: 20px;"
-                  @click="freshVerificationCode()"
-                >
-              </el-tooltip>
-            </div>
+<!--            <div style="display: flex;margin: 0px;padding: 0px;">-->
+<!--              <input-->
+<!--                v-model="loginForm.verificationCode"-->
+<!--                type="text"-->
+<!--                class="inputs user"-->
+<!--                placeholder="请输入验证码"-->
+<!--                style="display: flex;margin: 0px;"-->
+<!--              >-->
+<!--              <el-tooltip-->
+<!--                class="item"-->
+<!--                effect="dark"-->
+<!--                content="验证码看不清？点击图片可以刷新"-->
+<!--                placement="right-end"-->
+<!--              >-->
+<!--                <img-->
+<!--                  :src="'data:image/png;base64,' + verifyCodeImg"-->
+<!--                  alt="image"-->
+<!--                  style="border-radius: 10px;margin-left: 20px;"-->
+<!--                  @click="freshVerificationCode()"-->
+<!--                >-->
+<!--              </el-tooltip>-->
+<!--            </div>-->
 
             <div style="margin-top: 30px;">
               <span class="tips">忘记密码</span>
@@ -362,9 +362,9 @@ export default {
       // //登录
       loginForm: {
         // 用户名
-        username: 'a',
+        username: 'admin',
         // 密码
-        password: '123',
+        password: '123456',
         rememberPwd: false,
         uuid: '',
         verificationCode: ''
@@ -542,7 +542,7 @@ export default {
           this.loading = true
           console.log(this.loginForm)
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            console.log('aaa')
+            console.log('sbsbsbsbsb')
             this.$router.push({ path: this.redirect || '/' })
             // 进入首页的时候刷新一下首页，不然样式会残留(相当于f5)
             location.reload(true)

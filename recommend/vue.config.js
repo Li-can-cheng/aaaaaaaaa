@@ -33,7 +33,7 @@ module.exports = {
     port: port,
     proxy: {
       '/api': {
-        target: 'http://localhost:5000', // 后端服务地址
+        target: 'http://localhost:5001', // 后端服务地址
         ws: true, // 是否代理websockets
         changeOrigin: true, // 是否改变源地址，这里为true表示替换，使得请求看起来像从`http://localhost:5000`发起的
         pathRewrite: {
