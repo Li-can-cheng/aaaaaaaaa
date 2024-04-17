@@ -64,9 +64,9 @@ export const constantRoutes = [
       name: 'userCenter',
       component: () => import('@/views/userCenter/index'),
       meta: { title: '个人中心', icon: 'dashboard' },
-      hidden: true,
+      hidden: true
     }]
-  },
+  }
 ]
 
 export const asyncRoutes = [
@@ -104,45 +104,45 @@ export const asyncRoutes = [
       }
     ]
   },
-  //
-  // {
-  //   path: '/匹配简历',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: '匹配简历',
-  //       component: () => import('@/views/result/index'),
-  //       meta: { title: '匹配简历', icon: 'form', roles: ['admin'] }
-  //     }
-  //   ]
-  // },
 
-  // {
-  //   path: '/企业岗位管理',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: '企业岗位管理',
-  //       component: () => import('@/views/manage/index'),
-  //       meta: { title: '企业岗位管理', icon: 'documentation', roles: ['editor'] }
-  //     }
-  //   ]
-  // },
-  //
-  // {
-  //   path: '/用户管理',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: '用户管理',
-  //       component: () => import('@/views/usermanage/index'),
-  //       meta: { title: '用户管理', icon: 'peoples', roles: ['editor'] }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/匹配简历',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: '匹配简历',
+        component: () => import('@/views/result/index'),
+        meta: { title: '匹配简历', icon: 'form', roles: ['admin'] }
+      }
+    ]
+  },
+
+  {
+    path: '/企业岗位管理',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: '企业岗位管理',
+        component: () => import('@/views/manage/index'),
+        meta: { title: '企业岗位管理', icon: 'documentation', roles: ['editor'] }
+      }
+    ]
+  },
+
+  {
+    path: '/用户管理',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: '用户管理',
+        component: () => import('@/views/usermanage/index'),
+        meta: { title: '用户管理', icon: 'peoples', roles: ['editor'] }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

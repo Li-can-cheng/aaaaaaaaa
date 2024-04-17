@@ -21,10 +21,10 @@
     <el-form-item label="微信" prop="openid">
 
       <div style="display: flex;border: 1.5px solid #DCDFE6;border-radius:3px;">
-        <el-avatar shape="medium" :size="50" :src="user.wechatAvatar" style="margin: 5px;border-radius:3px;" v-if="user.openid != null"></el-avatar>
-        <div style="margin-top: 10px;margin-left: 5px;width: 100%;" v-if="user.openid != null">{{ user.wechatName }}
+        <el-avatar v-if="user.openid != null" shape="medium" :size="50" :src="user.wechatAvatar" style="margin: 5px;border-radius:3px;" />
+        <div v-if="user.openid != null" style="margin-top: 10px;margin-left: 5px;width: 100%;">{{ user.wechatName }}
         </div>
-        <el-button type="text" @click="bindWechat()" v-if="user.openid == null">绑定微信</el-button>
+        <el-button v-if="user.openid == null" type="text" @click="bindWechat()">绑定微信</el-button>
       </div>
 
     </el-form-item>
@@ -59,16 +59,16 @@ export default {
           // { required: true, message: "邮箱地址不能为空", trigger: "blur" },
           {
             pattern: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
-            message: "请输入正确的邮箱地址",
-            trigger: ["blur", "change"]
+            message: '请输入正确的邮箱地址',
+            trigger: ['blur', 'change']
           }
         ],
         phone: [
           // { required: true, message: "手机号码不能为空", trigger: "blur" },
           {
             pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: "请输入正确的手机号码",
-            trigger: "blur"
+            message: '请输入正确的手机号码',
+            trigger: 'blur'
           }
         ],
         age: [
@@ -76,38 +76,38 @@ export default {
           {
             // 只能输入一至三位数字
             pattern: /^\d{1,3}$/,
-            message: "请输入正确的年龄",
-            trigger: "blur"
+            message: '请输入正确的年龄',
+            trigger: 'blur'
           }
-        ],
+        ]
       }
-    };
+    }
   },
   created() {
 
   },
   methods: {
     submit() {
-      this.$refs["form"].validate(valid => {
+      this.$refs['form'].validate(valid => {
         if (valid) {
           userApi.update(this.user).then(response => {
-            this.$message.success("修改成功");
-          });
+            this.$message.success('修改成功')
+          })
         } else {
-          this.$message.error("数据校验失败");
+          this.$message.error('数据校验失败')
         }
-      });
+      })
     },
     close() {
-      this.$tab.closePage();
+      this.$tab.closePage()
     },
 
-    ////绑定微信
+    // //绑定微信
     bindWechat() {
-      let path = 'http://localhost:8160/api/ucenter/wx/login?token=' + getToken()
-      //跳转到登录扫描页面
-      location.href = path;
-    },
+      const path = 'http://localhost:8160/api/ucenter/wx/login?token=' + getToken()
+      // 跳转到登录扫描页面
+      location.href = path
+    }
   }
-};
+}
 </script>

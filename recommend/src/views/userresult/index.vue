@@ -2,10 +2,10 @@
   <div id=" app">
     <div class="upper-section">
       <div class="dashboard-container">
-        <el-button type="primary" @click="openDialog"style="margin-left: 40px">能力评价</el-button>
+        <el-button type="primary" style="margin-left: 40px"@click="openDialog">能力评价</el-button>
         <el-dialog :title="dialogTitle" :visible.sync="isDialogVisible" width="50%">
           <ping />
-          <div  style="text-indent: 2em;">{{ text }}</div>
+          <div style="text-indent: 2em;">{{ text }}</div>
           <span slot="footer" class="dialog-footer">
             <el-button type="primary" @click="confirmDialog">确定</el-button>
           </span>
@@ -13,9 +13,9 @@
       </div>
     </div>
     <div class="container">
-      <div class="xing" v-if="showTable">
+      <div v-if="showTable" class="xing">
         <p>您对该推荐的满意度为
-          <xing></xing>
+          <xing />
         </p>
       </div>
     </div>
@@ -23,8 +23,8 @@
       <div class="dashboard-container">
         <div class="job_recommend">
           <el-form @submit.prevent="job_recommend">
-              <el-button  type="primary" @click="job_recommend" style="margin-bottom: 30px;margin-left: 40px">职位推荐</el-button>
-              <table-component v-if="showTable" :recommendations="recommendations" ></table-component>
+            <el-button type="primary" style="margin-bottom: 30px;margin-left: 40px" @click="job_recommend">职位推荐</el-button>
+            <table-component v-if="showTable" :recommendations="recommendations" />
           </el-form>
         </div>
       </div>
@@ -37,7 +37,7 @@
 import axios from 'axios'
 import xing from './xing'
 import ping from './ping'
-import TableComponent from "./table.vue";
+import TableComponent from './table.vue'
 export default {
   components: { xing, ping, TableComponent },
   // eslint-disable-next-line vue/order-in-components
@@ -48,24 +48,24 @@ export default {
       isDialogVisible: false, // 控制弹出框可见性
       dialogTitle: '能力评价',
       text: '你好', // 用于存储输出内容
-      showTable: false,
+      showTable: false
     }
   },
   methods: {
     openDialog() {
-      this.isDialogVisible = true; // 打开弹出框
+      this.isDialogVisible = true // 打开弹出框
     },
     confirmDialog() {
-      this.isDialogVisible = false; // 关闭弹出框
+      this.isDialogVisible = false // 关闭弹出框
     },
 
     job_recommend() {
-      this.showTable = true;
+      this.showTable = true
 
       // 准备第一个请求的数据和配置
       var data = {
         id: this.id // 这里假设this.id已经是正确的uid值
-      };
+      }
 
       var preDo = {
         method: 'post',
@@ -74,13 +74,13 @@ export default {
           'Content-Type': 'application/json'
         },
         data: data
-      };
+      }
 
       // 发送第一个请求
       axios(preDo)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
-          this.recommendations = response.data.data;
+          console.log(JSON.stringify(response.data))
+          this.recommendations = response.data.data
 
           // 准备第二个请求的数据和配置
           var getRecommendations = {
@@ -90,18 +90,18 @@ export default {
               'Content-Type': 'application/json'
             },
             data: data
-          };
+          }
 
           // 在第一个请求成功后发送第二个请求
-          return axios(getRecommendations);
+          return axios(getRecommendations)
         })
         .then((response) => {
-          console.log(JSON.stringify(response.data));
-          this.recommendations = JSON.parse(response.data.data).data;
+          console.log(JSON.stringify(response.data))
+          this.recommendations = JSON.parse(response.data.data).data
         })
         .catch((error) => {
-          console.log(error);
-        });
+          console.log(error)
+        })
     }
 
   }

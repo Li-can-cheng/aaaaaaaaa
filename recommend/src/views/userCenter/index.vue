@@ -10,30 +10,43 @@
             <div>
               <div class="text-center">
                 <div class="block">
-                  <el-avatar :size="120" :src="user.avatar"></el-avatar>
+                  <el-avatar :size="120" :src="user.avatar" />
                 </div>
               </div>
               <div class="text-center">
                 <!-- 文件上传按钮 -->
-                <el-button type="text" icon="el-icon-upload" @click="openAvatarChangeDialog()"
-                           size="medium"
+                <el-button
+                  type="text"
+                  icon="el-icon-upload"
+                  size="medium"
+                  @click="openAvatarChangeDialog()"
                 >更换头像
                 </el-button>
               </div>
               <!-- 头像上传对话框 -->
               <el-dialog title="更换头像" :visible.sync="avatarChangeDialogVisible" width="400px">
                 <div style="display: flex;justify-content: center;">
-                  <el-upload class="avatar-uploader"
-                             :action="ossPath"
-                             :data="dataObj" list-type="picture" :multiple="false" :show-file-list="showFileList"
-                             :file-list="fileList" :before-upload="beforeUpload" :on-remove="handleRemove"
-                             :on-success="handleUploadSuccess" :on-preview="handlePreview"
+                  <el-upload
+                    class="avatar-uploader"
+                    :action="ossPath"
+                    :data="dataObj"
+                    list-type="picture"
+                    :multiple="false"
+                    :show-file-list="showFileList"
+                    :file-list="fileList"
+                    :before-upload="beforeUpload"
+                    :on-remove="handleRemove"
+                    :on-success="handleUploadSuccess"
+                    :on-preview="handlePreview"
                   >
                     <div class="centerDiv">
-                      <img v-if="avatarUrl" :src="avatarUrl" class="avatar"
-                           style="margin-bottom: 10px;"
+                      <img
+                        v-if="avatarUrl"
+                        :src="avatarUrl"
+                        class="avatar"
+                        style="margin-bottom: 10px;"
                       >
-                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                      <i v-else class="el-icon-plus avatar-uploader-icon" />
                       <div slot="tip" class="el-upload__tip">
                         只能上传jpg/png文件，且不超过10MB
                       </div>
@@ -42,12 +55,12 @@
                 </div>
 
                 <span slot="footer" class="dialog-footer">
-                                    <el-button @click="avatarChangeDialogVisible = false">取 消</el-button>
-                                    <el-button type="primary" @click="changeAvatar()">更 换</el-button>
-                                </span>
+                  <el-button @click="avatarChangeDialogVisible = false">取 消</el-button>
+                  <el-button type="primary" @click="changeAvatar()">更 换</el-button>
+                </span>
               </el-dialog>
               <el-dialog :visible.sync="dialogVisible">
-                <img width="100%" :src="fileList[0].url" alt=""/>
+                <img width="100%" :src="fileList[0].url" alt="">
               </el-dialog>
 
               <ul class="list-group list-group-striped">
@@ -95,13 +108,13 @@
             <div>
               <el-tabs v-model="activeName" @tab-click="handleClick">
                 <el-tab-pane label="基本资料" name="first">
-                  <userInfo :user="user" style="width:35%"/>
+                  <userInfo :user="user" style="width:35%" />
                 </el-tab-pane>
                 <el-tab-pane label="修改密码" name="second">
-                  <resetPwd style="width:35%"/>
+                  <resetPwd style="width:35%" />
                 </el-tab-pane>
                 <el-tab-pane label="工作偏好" name="third">
-                  <workPreference :user="user"/>
+                  <workPreference :user="user" />
                 </el-tab-pane>
               </el-tabs>
             </div>
@@ -120,7 +133,7 @@ import workPreference from './workPreference'
 
 export default {
   name: 'UserCenter',
-  components: { userInfo, resetPwd, workPreference},
+  components: { userInfo, resetPwd, workPreference },
   data() {
     return {
       token: '',
@@ -129,8 +142,8 @@ export default {
         timeSlotList: new Array()
       },
 
-      ////头像上传
-      //上传弹框组件是否显示
+      // //头像上传
+      // 上传弹框组件是否显示
       avatarChangeDialogVisible: false,
       dataObj: {
         policy: '',
@@ -144,8 +157,8 @@ export default {
       dialogVisible: false,
       avatarUrl: '',
 
-      ////自定义内容
-      //默认激活tab
+      // //自定义内容
+      // 默认激活tab
       activeName: 'first'
     }
   },
@@ -187,40 +200,39 @@ export default {
   },
 
   methods: {
-    //初始化用户信息
+    // 初始化用户信息
     initUserMessage() {
       userApi.getUserInfoVoByToken().then(res => {
         // console.log("res.userInfoVo:" + JSON.stringify(res.userInfoVo))
         this.user = res.userInfoVo
         this.user.gender = this.user.gender + ''
         // console.log("this.user.id:" + this.user.id)
-        ///解析工作时间偏好
+        // /解析工作时间偏好
         this.user.timeSlotList = this.parseTimeSlotList(this.user.workTimePreference + '')
       })
     },
-    //解析工作时间偏好
+    // 解析工作时间偏好
     parseTimeSlotList(workTimePreference) {
-      let timeSlotList = new Array()
-      let splict = workTimePreference.split('|')
+      const timeSlotList = new Array()
+      const splict = workTimePreference.split('|')
       for (let i = 0; i < splict.length; i++) {
         // console.log("splict[i]:" + splict[i])
-        let timeSlot = splict[i].split('~')
+        const timeSlot = splict[i].split('~')
         timeSlotList.push({ startTime: timeSlot[0], endTime: timeSlot[1] })
       }
       // console.log("timeSlotList:" + JSON.stringify(timeSlotList))
       return timeSlotList
-
     },
-    //更新用户信息
+    // 更新用户信息
     updateUserInfo(user) {
       userApi.update(user).then(res => {
         this.$message.success('保存成功')
       })
     },
-    //修改用户头像
+    // 修改用户头像
     changeAvatar() {
       // console.log("this.user.id:" + this.user.id)
-      let user = {
+      const user = {
         id: this.user.id,
         avatar: this.avatarUrl
       }
@@ -229,7 +241,7 @@ export default {
       this.avatarChangeDialogVisible = false
       this.initUserMessage()
     },
-    //打开头像更换对话框
+    // 打开头像更换对话框
     openAvatarChangeDialog() {
       this.avatarChangeDialogVisible = true
       this.avatarUrl = ''
@@ -241,7 +253,7 @@ export default {
       this.dialogVisible = true
     },
     beforeUpload(file) {
-      ////判断文件类型和大小是否合适
+      // //判断文件类型和大小是否合适
       const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'
       const isLt2M = file.size / 1024 / 1024 < 10
       if (!isJPG) {
@@ -250,7 +262,7 @@ export default {
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 10MB!')
       }
-      ////获取OSS签名
+      // //获取OSS签名
       return new Promise((resolve, reject) => {
         ossApi.getPolicy()
           .then((response) => {
@@ -267,7 +279,6 @@ export default {
             reject(false)
           })
       })
-
     },
     handleUploadSuccess(res, file) {
       // console.log("上传成功...");
@@ -283,7 +294,7 @@ export default {
       // console.log("this.fileList[0].url:" + this.fileList[0].url)
       this.avatarUrl = this.fileList[0].url
     },
-    //切换tab
+    // 切换tab
     handleClick() {
     }
   }

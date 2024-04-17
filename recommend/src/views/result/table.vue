@@ -37,12 +37,12 @@ export default {
       required: true
     }
   }
-};
+}
 </script>
 
 <style scoped>
 .content{
-  table-layout: fixed; 
+  table-layout: fixed;
   width: 100%;
   top:50px;
 }

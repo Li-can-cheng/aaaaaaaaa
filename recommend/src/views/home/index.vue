@@ -1,60 +1,59 @@
 <template>
-	<div class="home-container">
-		<div class="searchIndex">
+  <div class="home-container">
+    <div class="searchIndex">
 
-			<div class="scaled">
-				<div class="home-text">欢迎来到职位推荐系统！</div>
-				<div class="down">
-					<photo></photo>
-				</div>
-			</div>
-			<div class="contains" :width="nxw">
-				<div class="search">
-					<div style="width: 70%;margin: 0 auto; text-align: center">
-<!--						<el-row span="10">-->
-<!--							<el-col>-->
-<!--								&lt;!&ndash; <linSearch @query="onQueryChange" placeholder="请输入职位名称" ref="searchKeyword" /> &ndash;&gt;-->
-<!--								<el-input v-model="searchKeyword" @change="onQueryChange" placeholder="请输入职位名称"-->
-<!--									size="large" clearable>-->
-<!--									<el-button @click="onQueryChange" slot="append" icon="el-icon-search">查询</el-button>-->
-<!--								</el-input>-->
-<!--							</el-col>-->
-<!--						</el-row>-->
-					</div>
-					<div class="s_hot">
-						热门职位：
-						<span class="s_hot_like" @click="searchKeyword = 'java'">&nbsp;Java开发</span>
-						<span class="s_hot_like" @click="searchKeyword = '数据'">大数据平台开发</span>
-						<span class="s_hot_like" @click="searchKeyword = 'PHP'">PHP</span>
-						<span class="s_hot_like" @click="searchKeyword = '数据'">数据挖掘</span>
-						<span class="s_hot_like" @click="searchKeyword = 'C++'">C++</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+      <div class="scaled">
+        <div class="home-text">欢迎来到职位推荐系统！</div>
+        <div class="down">
+          <photo />
+        </div>
+      </div>
+      <div class="contains" :width="nxw">
+        <div class="search">
+          <div style="width: 70%;margin: 0 auto; text-align: center">
+            <!--						<el-row span="10">-->
+            <!--							<el-col>-->
+            <!--								&lt;!&ndash; <linSearch @query="onQueryChange" placeholder="请输入职位名称" ref="searchKeyword" /> &ndash;&gt;-->
+            <!--								<el-input v-model="searchKeyword" @change="onQueryChange" placeholder="请输入职位名称"-->
+            <!--									size="large" clearable>-->
+            <!--									<el-button @click="onQueryChange" slot="append" icon="el-icon-search">查询</el-button>-->
+            <!--								</el-input>-->
+            <!--							</el-col>-->
+            <!--						</el-row>-->
+          </div>
+          <div class="s_hot">
+            热门职位：
+            <span class="s_hot_like" @click="searchKeyword = 'java'">&nbsp;Java开发</span>
+            <span class="s_hot_like" @click="searchKeyword = '数据'">大数据平台开发</span>
+            <span class="s_hot_like" @click="searchKeyword = 'PHP'">PHP</span>
+            <span class="s_hot_like" @click="searchKeyword = '数据'">数据挖掘</span>
+            <span class="s_hot_like" @click="searchKeyword = 'C++'">C++</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import photo from './photo'
 
 export default {
-	name: 'Home',
-	components: { photo },
-	data() {
-		return {
-			searchKeyword: '', // 存储搜索关键字
-		};
-	},
-	methods: {
-		// 当搜索框中的值发生改变时触发
-		onQueryChange() {
-			console.log('搜索关键字：', this.searchKeyword);
-		}
-	}
+  name: 'Home',
+  components: { photo },
+  data() {
+    return {
+      searchKeyword: '' // 存储搜索关键字
+    }
+  },
+  methods: {
+    // 当搜索框中的值发生改变时触发
+    onQueryChange() {
+      console.log('搜索关键字：', this.searchKeyword)
+    }
+  }
 }
 </script>
-
 
 <style lang="scss" scoped>
 .home {

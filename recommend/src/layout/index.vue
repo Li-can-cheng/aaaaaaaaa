@@ -19,10 +19,10 @@ import ResizeMixin from './mixin/ResizeHandler'
 export default {
   name: 'Layout',
   components: {
-    Navbar,//µ¼º½À¸
-    Sidebar,//²à±ßÀ¸
-    AppMain,//Ö÷Ãæ°å
-    AppFooter,//Ò³½Å
+    Navbar, // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    Sidebar, // ï¿½ï¿½ï¿½ï¿½ï¿½
+    AppMain, // ï¿½ï¿½ï¿½ï¿½ï¿½
+    AppFooter// Ò³ï¿½ï¿½
   },
   mixins: [ResizeMixin],
   computed: {

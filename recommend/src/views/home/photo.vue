@@ -1,70 +1,70 @@
 <template>
-    <div class="shell">
-        <ul class="images" :style="{ left: `${index * -100}%` }">
-            <li v-for="(image, i) in images" :key="i" class="img">
-                <img :src="image" :alt="'Slide ' + (i + 1)">
-            </li>
-        </ul>
-        <ul class="min">
-            <li v-for="(image, i) in images" :key="i" class="m" @click="goToSlide(i)"></li>
-        </ul>
-        <div class="button">
-            <div class="button-left" @click="prevSlide">&lt;</div>
-            <div class="button-right" @click="nextSlide">&gt;</div>
-        </div>
+  <div class="shell">
+    <ul class="images" :style="{ left: `${index * -100}%` }">
+      <li v-for="(image, i) in images" :key="i" class="img">
+        <img :src="image" :alt="'Slide ' + (i + 1)">
+      </li>
+    </ul>
+    <ul class="min">
+      <li v-for="(image, i) in images" :key="i" class="m" @click="goToSlide(i)" />
+    </ul>
+    <div class="button">
+      <div class="button-left" @click="prevSlide">&lt;</div>
+      <div class="button-right" @click="nextSlide">&gt;</div>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
-    data() {
-        return {
-            index: 0,
-            images: [
-                "../../assets/lunbo/1.jpg",
-                "../../assets/lunbo/2.jpg",
-                "../../assets/lunbo/3.jpg",
-                "../../assets/lunbo/4.jpg",
-                "../../assets/lunbo/5.jpg"
-            ],
-            time: null
-        };
-    },
-    mounted() {
-        this.startTimer();
-    },
-    methods: {
-        startTimer() {
-            this.time = setInterval(this.nextSlide, 3000);
-        },
-        stopTimer() {
-            clearInterval(this.time);
-        },
-        goToSlide(index) {
-            this.index = index;
-            this.stopTimer();
-            this.startTimer();
-        },
-        prevSlide() {
-            if (this.index === 0) {
-                this.index = this.images.length - 1;
-            } else {
-                this.index--;
-            }
-            this.stopTimer();
-            this.startTimer();
-        },
-        nextSlide() {
-            if (this.index === this.images.length - 1) {
-                this.index = 0;
-            } else {
-                this.index++;
-            }
-            this.stopTimer();
-            this.startTimer();
-        }
+  data() {
+    return {
+      index: 0,
+      images: [
+        '../../assets/lunbo/1.jpg',
+        '../../assets/lunbo/2.jpg',
+        '../../assets/lunbo/3.jpg',
+        '../../assets/lunbo/4.jpg',
+        '../../assets/lunbo/5.jpg'
+      ],
+      time: null
     }
-};
+  },
+  mounted() {
+    this.startTimer()
+  },
+  methods: {
+    startTimer() {
+      this.time = setInterval(this.nextSlide, 3000)
+    },
+    stopTimer() {
+      clearInterval(this.time)
+    },
+    goToSlide(index) {
+      this.index = index
+      this.stopTimer()
+      this.startTimer()
+    },
+    prevSlide() {
+      if (this.index === 0) {
+        this.index = this.images.length - 1
+      } else {
+        this.index--
+      }
+      this.stopTimer()
+      this.startTimer()
+    },
+    nextSlide() {
+      if (this.index === this.images.length - 1) {
+        this.index = 0
+      } else {
+        this.index++
+      }
+      this.stopTimer()
+      this.startTimer()
+    }
+  }
+}
 </script>
 
 <style scoped>

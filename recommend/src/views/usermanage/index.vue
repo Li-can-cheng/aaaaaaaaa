@@ -62,12 +62,11 @@
           :total="totalPage"
           :current-page.sync="pageIndex"
           :page-size.sync="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
           @current-change="currentChangeHandle"
           @size-change="sizeChangeHandle"
-          layout="total, sizes, prev, pager, next, jumper">
-        </el-pagination>
+        />
       </div>
-
 
     </div>
     <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList" />

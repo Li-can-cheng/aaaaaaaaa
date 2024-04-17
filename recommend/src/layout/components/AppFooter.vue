@@ -1,18 +1,18 @@
 <template>
-    <div class="by-app-footer">
-        Copyright&nbsp;&nbsp;&copy;2024&nbsp;&nbsp;职位推荐系统&nbsp;&nbsp;All&nbsp;Rights&nbsp;Reserved
-    </div>
+  <div class="by-app-footer">
+    Copyright&nbsp;&nbsp;&copy;2024&nbsp;&nbsp;职位推荐系统&nbsp;&nbsp;All&nbsp;Rights&nbsp;Reserved
+  </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 
 export default {
-    name:'AppFooter',
+  name: 'AppFooter',
 
-    computed: {
-        ...mapState('webSocket', ['socketData']),
-    }
+  computed: {
+    ...mapState('webSocket', ['socketData'])
+  }
 }
 </script>
 

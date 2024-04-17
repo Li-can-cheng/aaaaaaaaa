@@ -1,12 +1,11 @@
 <template>
   <el-dialog :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="80px">
+    <el-form ref="dataForm" :model="dataForm" :rules="dataRule" label-width="80px" @keyup.enter.native="dataFormSubmit()">
       <el-form-item label="名称" prop="name">
-        <el-input v-model="dataForm.name" placeholder="名称"></el-input>
+        <el-input v-model="dataForm.name" placeholder="名称" />
       </el-form-item>
       <el-form-item label="详情" prop="detail">
-        <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 10 }" placeholder="详情" v-model="dataForm.detail">
-        </el-input>
+        <el-input v-model="dataForm.detail" type="textarea" :autosize="{ minRows: 6, maxRows: 10 }" placeholder="详情" />
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -25,7 +24,7 @@ export default {
       dataForm: {
         id: 0,
         name: '',
-        detail: '',
+        detail: ''
       },
       dataRule: {
         name: [
@@ -33,7 +32,7 @@ export default {
         ],
         detail: [
           { required: true, message: '名称不能为空', trigger: 'blur' }
-        ],
+        ]
       }
     }
   },
@@ -42,8 +41,8 @@ export default {
       this.dataForm = {
         id: 0,
         name: '',
-        detail: '',
-      };
+        detail: ''
+      }
       this.dataForm.id = id || 0
       this.visible = true
       this.$nextTick(() => {
@@ -53,7 +52,7 @@ export default {
             .then(res => {
               if (res.code === this.ResultCode.success) {
                 this.dataForm = res.enterprise
-                console.log("企业查询this.dataForm:" + JSON.stringify(this.dataForm.logo))
+                console.log('企业查询this.dataForm:' + JSON.stringify(this.dataForm.logo))
               }
             })
         }
@@ -66,14 +65,14 @@ export default {
     dataFormSubmit() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          let logo = this.$refs.pictureUpload.picUrl != undefined ? this.$refs.pictureUpload.picUrl : this.dataForm.pictureUrl;
-          let data = {
+          const logo = this.$refs.pictureUpload.picUrl != undefined ? this.$refs.pictureUpload.picUrl : this.dataForm.pictureUrl
+          const data = {
             'id': this.dataForm.id || undefined,
             'name': this.dataForm.name,
             'detail': this.dataForm.detail,
             'status': this.dataForm.status,
             'logo': logo
-          };
+          }
 
           if (this.dataForm.id) {
             enterpriseApi.update(data).then(res => {
@@ -84,7 +83,7 @@ export default {
                 this.$message({
                   message: '操作成功',
                   type: 'success',
-                  duration: 1500,
+                  duration: 1500
                 })
               } else {
                 this.$message.error(res.msg)
@@ -98,7 +97,7 @@ export default {
                 this.$message({
                   message: '操作成功',
                   type: 'success',
-                  duration: 1500,
+                  duration: 1500
 
                 })
               } else {
@@ -106,7 +105,6 @@ export default {
               }
             })
           }
-
         }
       })
     }

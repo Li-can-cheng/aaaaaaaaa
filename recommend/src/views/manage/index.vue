@@ -45,15 +45,15 @@
             @selection-change="selectionChangeHandle"
           >
             <el-table-column type="selection" header-align="center" align="center" width="50" />
-<!--            <el-table-column label="企业logo" width="100">-->
-<!--              <template slot-scope="scope">-->
-<!--                &lt;!&ndash; <el-avatar shape="square" size="medium" :src="scope.row.logo"></el-avatar> &ndash;&gt;-->
-<!--                <el-image style="height: 50px" :src="scope.row.logo" fit="contain" class="image" />-->
-<!--              </template>-->
-<!--            </el-table-column>-->
+            <!--            <el-table-column label="企业logo" width="100">-->
+            <!--              <template slot-scope="scope">-->
+            <!--                &lt;!&ndash; <el-avatar shape="square" size="medium" :src="scope.row.logo"></el-avatar> &ndash;&gt;-->
+            <!--                <el-image style="height: 50px" :src="scope.row.logo" fit="contain" class="image" />-->
+            <!--              </template>-->
+            <!--            </el-table-column>-->
             <el-table-column prop="name" header-align="left" align="left" label="名称" width="180" />
             <el-table-column prop="title" header-align="left" align="left" label="岗位类型" width="150" />
-            <el-table-column prop="detail" header-align="left" align="left" label="岗位详情" width="680"/>
+            <el-table-column prop="detail" header-align="left" align="left" label="岗位详情" width="680" />
             <el-table-column prop="address" header-align="left" align="left" label="地址" width="150" />
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
               <template slot-scope="scope">
@@ -70,10 +70,10 @@
         :total="totalPage"
         :current-page.sync="pageIndex"
         :page-size.sync="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
         @current-change="currentChangeHandle"
         @size-change="sizeChangeHandle"
-        layout="total, sizes, prev, pager, next, jumper">
-      </el-pagination>
+      />
     </div>
     <!-- 弹窗, 新增 / 修改 -->
     <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList" />
@@ -107,35 +107,35 @@ export default {
   methods: {
     // 获取数据列表
     getDataList() {
-      this.dataListLoading = true;
+      this.dataListLoading = true
       const params = {
         'page': this.pageIndex,
-        'limit': this.pageSize,
+        'limit': this.pageSize
         // 'key': this.dataForm.key
-      };
+      }
 
       enterpriseApi.listEnterpriseVo(params)
         .then(res => {
-          console.log('API response:', res);
-          const data = res.data;
+          console.log('API response:', res)
+          const data = res.data
           if (data.code === 200 && data.data && data.data.page) {
-            this.dataList = data.data.list || [];
-            this.totalPage = data.data.page.totalCount || 0;
-            console.log('企业岗位列表:', JSON.stringify(this.dataList));
+            this.dataList = data.data.list || []
+            this.totalPage = data.data.page.totalCount || 0
+            console.log('企业岗位列表:', JSON.stringify(this.dataList))
           } else {
-            console.error('未能获取到有效的数据:', data.msg || '无错误消息');
-            this.dataList = [];
-            this.totalPage = 0;
+            console.error('未能获取到有效的数据:', data.msg || '无错误消息')
+            this.dataList = []
+            this.totalPage = 0
           }
         })
         .catch(error => {
-          console.error('请求企业岗位列表数据失败:', error);
-          this.dataList = [];
-          this.totalPage = 0;
+          console.error('请求企业岗位列表数据失败:', error)
+          this.dataList = []
+          this.totalPage = 0
         })
         .finally(() => {
-          this.dataListLoading = false;
-        });
+          this.dataListLoading = false
+        })
     },
 
     // 每页数

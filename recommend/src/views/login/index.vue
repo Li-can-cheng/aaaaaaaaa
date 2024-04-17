@@ -2,41 +2,71 @@
   <div class="body">
     <div class="content">
       <div class="left">
-        <img src="@/assets/login/img2.png" class="people p-animtion"
-             alt="people">
-        <img src="@/assets/login/img1.png" class="sphere s-animtion"
-             alt="sphere">
+        <img
+          src="@/assets/login/img2.png"
+          class="people p-animtion"
+          alt="people"
+        >
+        <img
+          src="@/assets/login/img1.png"
+          class="sphere s-animtion"
+          alt="sphere"
+        >
       </div>
       <div class="right">
         <div class="form-wrappepr">
           <div style="display: block;width: 100%;">
-            <h1 style="margin-bottom: 5vh;font-weight: bold;display: block;"
-                v-if="pageType === 0">欢迎进入职位推荐系统
+            <h1
+              v-if="pageType === 0"
+              style="margin-bottom: 5vh;font-weight: bold;display: block;"
+            >欢迎进入职位推荐系统
             </h1>
-            <h1 style="margin-bottom: 5vh;font-weight: bold;display: block;"
-                v-if="pageType === 1">欢迎进行用户注册</h1>
+            <h1
+              v-if="pageType === 1"
+              style="margin-bottom: 5vh;font-weight: bold;display: block;"
+            >欢迎进行用户注册</h1>
           </div>
-          <el-form class="login-form" :rules="loginRules" ref="loginForm"
-                   :model="loginForm" label-width="0"
-                   v-if="pageType === 0"
+          <el-form
+            v-if="pageType === 0"
+            ref="loginForm"
+            class="login-form"
+            :rules="loginRules"
+            :model="loginForm"
+            label-width="0"
           >
-            <input type="text" class="inputs user" placeholder="请输入用户名"
-                   v-model="loginForm.username">
-            <input type="password" class="inputs pwd" placeholder="请输入密码"
-                   v-model="loginForm.password">
+            <input
+              v-model="loginForm.username"
+              type="text"
+              class="inputs user"
+              placeholder="请输入用户名"
+            >
+            <input
+              v-model="loginForm.password"
+              type="password"
+              class="inputs pwd"
+              placeholder="请输入密码"
+            >
 
             <div style="display: flex;margin: 0px;padding: 0px;">
-              <input type="text" class="inputs user" placeholder="请输入验证码"
-                     v-model="loginForm.verificationCode"
-                     style="display: flex;margin: 0px;"
+              <input
+                v-model="loginForm.verificationCode"
+                type="text"
+                class="inputs user"
+                placeholder="请输入验证码"
+                style="display: flex;margin: 0px;"
               >
-              <el-tooltip class="item" effect="dark"
-                          content="验证码看不清？点击图片可以刷新"
-                          placement="right-end">
-                <img :src="'data:image/png;base64,' + verifyCodeImg" alt="image"
-                     style="border-radius: 10px;margin-left: 20px;"
-                     @click="freshVerificationCode()"
-                />
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="验证码看不清？点击图片可以刷新"
+                placement="right-end"
+              >
+                <img
+                  :src="'data:image/png;base64,' + verifyCodeImg"
+                  alt="image"
+                  style="border-radius: 10px;margin-left: 20px;"
+                  @click="freshVerificationCode()"
+                >
               </el-tooltip>
             </div>
 
@@ -44,84 +74,123 @@
               <span class="tips">忘记密码</span>
             </div>
 
-            <button v-if="pageType === 0" @click="handleLogin()"
-                    class="custom-button">登 录
+            <button
+              v-if="pageType === 0"
+              class="custom-button"
+              @click="handleLogin()"
+            >登 录
             </button>
 
             <div>
-                            <span style="float: left">
-                                <el-button type="text"
-                                           @click="enterEnterpriseRegist()">企业注册</el-button>
-                            </span>
+              <span style="float: left">
+                <el-button
+                  type="text"
+                  @click="enterEnterpriseRegist()"
+                >企业注册</el-button>
+              </span>
               <span style="float: right">
-                                没有账号？<el-button type="text"
-                                                    @click="enterRegister()">点击注册</el-button>
-                            </span>
+                没有账号？<el-button
+                  type="text"
+                  @click="enterRegister()"
+                >点击注册</el-button>
+              </span>
             </div>
-
 
           </el-form>
 
           <!-- 注册表单 -->
-          <el-form class="regist-form" :rules="loginRules" ref="registForm"
-                   :model="registForm" label-width="0"
-                   v-if="pageType === 1"
+          <el-form
+            v-if="pageType === 1"
+            ref="registForm"
+            class="regist-form"
+            :rules="loginRules"
+            :model="registForm"
+            label-width="0"
           >
-            <input type="text" class="inputs user" placeholder="请输入用户名"
-                   v-model="registForm.username"
-                   @change="usernameCheck()"
+            <input
+              v-model="registForm.username"
+              type="text"
+              class="inputs user"
+              placeholder="请输入用户名"
+              @change="usernameCheck()"
             >
-            <input type="password" class="inputs pwd" placeholder="请输入密码"
-                   v-model="registForm.password">
-            <input type="text" class="inputs user" placeholder="请输入邮箱"
-                   v-model="registForm.mail">
+            <input
+              v-model="registForm.password"
+              type="password"
+              class="inputs pwd"
+              placeholder="请输入密码"
+            >
+            <input
+              v-model="registForm.mail"
+              type="text"
+              class="inputs user"
+              placeholder="请输入邮箱"
+            >
             <div style="display: flex;margin: 0px;padding: 0px;">
-              <input type="text" class="inputs user" placeholder="请输入验证码"
-                     v-model="registForm.code"
-                     style="display: flex;margin: 0px;"
+              <input
+                v-model="registForm.code"
+                type="text"
+                class="inputs user"
+                placeholder="请输入验证码"
+                style="display: flex;margin: 0px;"
               >
-              <el-button type="text" class="custom-button"
-                         style="  background-color: rgb(99, 146, 248);width: 170px; height: 60px;margin:0px 0px 0px 20px;"
-                         @click="sendCode()"
+              <el-button
+                type="text"
+                class="custom-button"
+                style="  background-color: rgb(99, 146, 248);width: 170px; height: 60px;margin:0px 0px 0px 20px;"
+                @click="sendCode()"
               >{{ sendCodeMes1 }}
               </el-button>
             </div>
 
-
-            <button v-if="pageType === 1" class="custom-button"
-                    @click="handleRegist()">注 册
+            <button
+              v-if="pageType === 1"
+              class="custom-button"
+              @click="handleRegist()"
+            >注 册
             </button>
             <div>
-                            <span style="float: left">
-                                <el-button type="text"
-                                           @click="enterEnterpriseRegist()">企业注册</el-button>
-                            </span>
+              <span style="float: left">
+                <el-button
+                  type="text"
+                  @click="enterEnterpriseRegist()"
+                >企业注册</el-button>
+              </span>
               <span style="float: right">
-                                已有账号？<el-button type="text"
-                                                    @click="enterLogin()">点击登录</el-button>
-                            </span>
+                已有账号？<el-button
+                  type="text"
+                  @click="enterLogin()"
+                >点击登录</el-button>
+              </span>
             </div>
 
           </el-form>
 
           <!-- 企业注册表单 -->
-          <el-form class="enterprise-regist-form" ref="entertpriseRegistForm"
-                   :model="registForm" label-width="0"
-                   v-if="pageType === 2"
+          <el-form
+            v-if="pageType === 2"
+            ref="entertpriseRegistForm"
+            class="enterprise-regist-form"
+            :model="registForm"
+            label-width="0"
           >
             <div class="logo">
               <div class="block" @click="openAvatarChangeDialog()">
-                <el-image style="width:150px;height: 150px"
-                          v-if="!entertpriseRegistForm.logo" fit="contain"
-                          lazy
+                <el-image
+                  v-if="!entertpriseRegistForm.logo"
+                  style="width:150px;height: 150px"
+                  fit="contain"
+                  lazy
                 >
                   <div slot="error" class="image-slot">
-                    <i class="el-icon-picture-outline"></i>
+                    <i class="el-icon-picture-outline" />
                   </div>
                 </el-image>
-                <el-image style="height: 150px"
-                          v-if="entertpriseRegistForm.logo"
-                          :src="entertpriseRegistForm.logo" :fit="contain"
+                <el-image
+                  v-if="entertpriseRegistForm.logo"
+                  style="height: 150px"
+                  :src="entertpriseRegistForm.logo"
+                  :fit="contain"
                 >
                   <div slot="error" class="image-slot">
                     <span>加载失败</span>
@@ -130,70 +199,112 @@
               </div>
             </div>
 
-            <input type="text" class="inputs user" placeholder="请输入企业名称"
-                   v-model="entertpriseRegistForm.name">
-            <input type="password" class="inputs pwd" placeholder="请输入密码"
-                   v-model="entertpriseRegistForm.password">
-            <input type="text" class="inputs user" placeholder="请输入企业描述"
-                   v-model="entertpriseRegistForm.detail"
-                   @click="writeEnterpriseDetail()"
+            <input
+              v-model="entertpriseRegistForm.name"
+              type="text"
+              class="inputs user"
+              placeholder="请输入企业名称"
             >
-            <input type="text" class="inputs user" placeholder="请输入邮箱"
-                   v-model="entertpriseRegistForm.mail">
+            <input
+              v-model="entertpriseRegistForm.password"
+              type="password"
+              class="inputs pwd"
+              placeholder="请输入密码"
+            >
+            <input
+              v-model="entertpriseRegistForm.detail"
+              type="text"
+              class="inputs user"
+              placeholder="请输入企业描述"
+              @click="writeEnterpriseDetail()"
+            >
+            <input
+              v-model="entertpriseRegistForm.mail"
+              type="text"
+              class="inputs user"
+              placeholder="请输入邮箱"
+            >
             <div style="display: flex;margin: 0px;padding: 0px;">
-              <input type="text" class="inputs user" placeholder="请输入验证码"
-                     v-model="entertpriseRegistForm.code"
-                     style="display: flex;margin: 0px;"
+              <input
+                v-model="entertpriseRegistForm.code"
+                type="text"
+                class="inputs user"
+                placeholder="请输入验证码"
+                style="display: flex;margin: 0px;"
               >
-              <el-button type="text" class="custom-button"
-                         style="  background-color: rgb(99, 146, 248);width: 170px; height: 60px;margin:0px 0px 0px 20px;"
-                         @click="sendCode()"
+              <el-button
+                type="text"
+                class="custom-button"
+                style="  background-color: rgb(99, 146, 248);width: 170px; height: 60px;margin:0px 0px 0px 20px;"
+                @click="sendCode()"
               >{{ sendCodeMes2 }}
               </el-button>
             </div>
 
-
-            <button v-if="pageType === 2" class="custom-button"
-                    @click="handleEnterpriseRegist()">企 业 注 册
+            <button
+              v-if="pageType === 2"
+              class="custom-button"
+              @click="handleEnterpriseRegist()"
+            >企 业 注 册
             </button>
             <div>
-                            <span style="float: right">
-                                企业已注册？<el-button type="text"
-                                                      @click="enterLogin()">回到登录</el-button>
-                            </span>
+              <span style="float: right">
+                企业已注册？<el-button
+                  type="text"
+                  @click="enterLogin()"
+                >回到登录</el-button>
+              </span>
             </div>
 
             <!-- 企业详情 -->
-            <el-dialog title="企业详情" :visible.sync="enterpriseDetailVisible"
-                       width="30%" append-to-body>
-              <el-input type="textarea" :rows="5" placeholder="请输入内容"
-                        v-model="entertpriseRegistForm.detail">
-              </el-input>
+            <el-dialog
+              title="企业详情"
+              :visible.sync="enterpriseDetailVisible"
+              width="30%"
+              append-to-body
+            >
+              <el-input
+                v-model="entertpriseRegistForm.detail"
+                type="textarea"
+                :rows="5"
+                placeholder="请输入内容"
+              />
               <span slot="footer" class="dialog-footer">
-                                <el-button type="primary"
-                                           @click="enterpriseDetailVisible = false">确 定</el-button>
-                            </span>
+                <el-button
+                  type="primary"
+                  @click="enterpriseDetailVisible = false"
+                >确 定</el-button>
+              </span>
             </el-dialog>
             <!-- 头像上传对话框 -->
-            <el-dialog title="上传logo"
-                       :visible.sync="avatarChangeDialogVisible" width="400px"
-                       append-to-body>
+            <el-dialog
+              title="上传logo"
+              :visible.sync="avatarChangeDialogVisible"
+              width="400px"
+              append-to-body
+            >
               <div style="display: flex;justify-content: center;">
-                <el-upload class="avatar-uploader"
-                           :action="ossPath"
-                           :data="dataObj" list-type="picture" :multiple="false"
-                           :show-file-list="showFileList"
-                           :file-list="fileList" :before-upload="beforeUpload"
-                           :on-remove="handleRemove"
-                           :on-success="handleUploadSuccess"
-                           :on-preview="handlePreview"
+                <el-upload
+                  class="avatar-uploader"
+                  :action="ossPath"
+                  :data="dataObj"
+                  list-type="picture"
+                  :multiple="false"
+                  :show-file-list="showFileList"
+                  :file-list="fileList"
+                  :before-upload="beforeUpload"
+                  :on-remove="handleRemove"
+                  :on-success="handleUploadSuccess"
+                  :on-preview="handlePreview"
                 >
                   <div class="centerDiv">
                     <div
-                      class="display: flex;justify-content: center;align-items: center;">
-                      <i class="el-icon-plus avatar-uploader-icon"
-                         style="font-size: 50px;margin: 50px;"
-                      ></i>
+                      class="display: flex;justify-content: center;align-items: center;"
+                    >
+                      <i
+                        class="el-icon-plus avatar-uploader-icon"
+                        style="font-size: 50px;margin: 50px;"
+                      />
                     </div>
                     <div slot="tip" class="el-upload__tip">
                       只能上传jpg/png文件，且不超过10MB
@@ -203,16 +314,16 @@
               </div>
             </el-dialog>
             <el-dialog :visible.sync="dialogVisible">
-              <img width="100%" :src="fileList[0].url" alt=""/>
+              <img width="100%" :src="fileList[0].url" alt="">
             </el-dialog>
 
           </el-form>
 
-          <div class="other-login" v-if="pageType === 0">
+          <div v-if="pageType === 0" class="other-login">
             <div class="divider">
-              <span class="line"></span>
+              <span class="line" />
               <span class="divider-text">使用其他方式登录</span>
-              <span class="line"></span>
+              <span class="line" />
             </div>
             <div class="other-login-wrapper">
               <div class="other-login-item">
@@ -229,7 +340,6 @@
   </div>
 </template>
 
-
 <script>
 import verificationCode from './verificationCode.vue'
 
@@ -241,19 +351,19 @@ export default {
 
   data() {
     return {
-      //oss上传地址
+      // oss上传地址
       ossPath: process.env.VUE_APP_OSS_PATH,
 
-      ////页面
+      // //页面
       loginOrRegisterTitle: '注 册',
-      //页面类型 0：登录 1：用户注册 2：企业注册
+      // 页面类型 0：登录 1：用户注册 2：企业注册
       pageType: 0,
 
-      ////登录
+      // //登录
       loginForm: {
-        //用户名
+        // 用户名
         username: 'a',
-        //密码
+        // 密码
         password: '123',
         rememberPwd: false,
         uuid: '',
@@ -261,56 +371,56 @@ export default {
       },
       loginRules: {
         username: [
-          {required: true, message: '请输入用户名', trigger: 'blur'}
+          { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
         password: [
-          {required: true, message: '请输入密码', trigger: 'blur'},
-          {min: 1, message: '密码长度最少为6位', trigger: 'blur'}
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 1, message: '密码长度最少为6位', trigger: 'blur' }
         ]
       },
-      ///验证码
-      //uuid
+      // /验证码
+      // uuid
       uuid: '',
-      //验证码图片
+      // 验证码图片
       verifyCodeImg: 'iVBORw0KGgoAAAANSUhEUgAAAHgAAAA8CAIAAAAiz+n/AAABAElEQVR42u3ZvwnCQBTA4dtKEKwdyQnsncHCxsIpXMAFnMAdFGyChpA/L7lc8sGvuvIjvPDu0uP50gQlBKBBCzRo0BRAgxZo0KApgAYt0KBBCzRogQYNWqBBCzRo0AJdabe5fwI9X+jr+dgQ6LAWC3057RvKLr6c0REF/Z0V/+WFvh221fJDtzksC/qHuJP1dDM6ZG5khK5lbW+d1qMcAt3+fL3QIZ9z7+mRSlEGvSLoWS8sscqF/glHhw5cUnooNy+EXdGHzI2JoHNddMRC11rPYnTELtxFX90VA1268ojQQ5Rj12730R2gvbAINGjQAg1aoEGDFmjQAg0atECX3htauJtUKiEdmQAAAABJRU5ErkJggg==',
 
-      ////注册
+      // //注册
       registForm: {
-        //用户名
+        // 用户名
         username: '',
-        //密码
+        // 密码
         password: '',
-        //邮箱
+        // 邮箱
         mail: '',
         code: ''
       },
       sendCodeMes1: '发送验证码',
-      //倒计时
+      // 倒计时
       countdownNum1: 60,
       interval1: {},
       isCount1: 0,
-      //公司选项
+      // 公司选项
       enterpriseOptions: [],
 
-      ////企业注册
+      // //企业注册
       entertpriseRegistForm: {
-        //企业名称
+        // 企业名称
         name: '',
-        //企业密码
+        // 企业密码
         password: '',
-        //企业描述
+        // 企业描述
         detail: '',
-        //邮箱
+        // 邮箱
         mail: '',
         code: ''
       },
       sendCodeMes2: '发送验证码',
-      //倒计时
+      // 倒计时
       countdownNum2: 60,
       interval2: {},
       isCount2: 0,
-      ///图片上传
-      //上传弹框组件是否显示
+      // /图片上传
+      // 上传弹框组件是否显示
       avatarChangeDialogVisible: false,
       dataObj: {
         policy: '',
@@ -323,23 +433,9 @@ export default {
       },
       dialogVisible: false,
       avatarUrl: '',
-      ///企业详情
+      // /企业详情
       enterpriseDetailVisible: false
     }
-  },
-
-  created() {
-    // 获取路径token里面的值
-    this.token = this.$route.query.token
-    if (this.token) {//有值才判断
-      this.wxLogin(this.token)
-    } else if (this.$route.query.message) {
-      this.$message.error('该微信还未绑定职位推荐系统的账号，请通过账号密码登录')
-    }
-
-    this.freshVerificationCode()
-
-    console.log("ossPath:" + this.ossPath)
   },
 
   computed: {
@@ -362,25 +458,39 @@ export default {
       ]
     },
     showFileList: {
-      get: function () {
+      get: function() {
         return (
           this.value !== null && this.value !== '' && this.value !== undefined
         )
       },
-      set: function (newValue) {
+      set: function(newValue) {
       }
     }
+  },
+
+  created() {
+    // 获取路径token里面的值
+    this.token = this.$route.query.token
+    if (this.token) { // 有值才判断
+      this.wxLogin(this.token)
+    } else if (this.$route.query.message) {
+      this.$message.error('该微信还未绑定职位推荐系统的账号，请通过账号密码登录')
+    }
+
+    this.freshVerificationCode()
+
+    console.log('ossPath:' + this.ossPath)
   },
 
   mounted() {
     /**
      * 开启星球的动画事件
      */
-    document.querySelector('.people').addEventListener('animationend', function () {
+    document.querySelector('.people').addEventListener('animationend', function() {
       this.classList.remove('p-animtion')
       this.classList.add('p-other-animtion')
     })
-    document.querySelector('.sphere').addEventListener('animationend', function () {
+    document.querySelector('.sphere').addEventListener('animationend', function() {
       this.classList.remove('s-animtion')
       this.classList.add('s-other-animtion')
     })
@@ -409,9 +519,9 @@ export default {
       this.pageType = 2
       this.loginOrRegisterTitle = '企 业 注 册'
     },
-    //跳转到微信登录页面
+    // 跳转到微信登录页面
     toWxLogin() {
-      //跳转到登录扫描页面
+      // 跳转到登录扫描页面
       location.href = 'http://localhost:8160/api/ucenter/wx/login'
     },
     showPassword() {
@@ -422,8 +532,8 @@ export default {
     wxLogin(token) {
       this.$store
         .dispatch('user/weixinLogin', token)
-      this.$router.push({path: this.redirect || '/'})
-      //进入首页的时候刷新一下首页，不然样式会残留(相当于f5)
+      this.$router.push({ path: this.redirect || '/' })
+      // 进入首页的时候刷新一下首页，不然样式会残留(相当于f5)
       location.reload(true)
     },
     handleLogin() {
@@ -433,8 +543,8 @@ export default {
           console.log(this.loginForm)
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             console.log('aaa')
-            this.$router.push({path: this.redirect || '/'})
-//进入首页的时候刷新一下首页，不然样式会残留(相当于f5)
+            this.$router.push({ path: this.redirect || '/' })
+            // 进入首页的时候刷新一下首页，不然样式会残留(相当于f5)
             location.reload(true)
             this.loading = false
           }).catch(() => {
@@ -446,10 +556,10 @@ export default {
         }
       })
     },
-    //处理注册
+    // 处理注册
     handleRegist() {
       regist(this.registForm).then((res) => {
-        //提示
+        // 提示
         this.$message({
           type: 'success',
           message: '注册成功，请登录系统'
@@ -457,13 +567,13 @@ export default {
         this.pageType = 0
       })
     },
-    //用户名查重
+    // 用户名查重
     usernameCheck() {
       // console.log("hduashdusahdush");
       usernameCheck(this.registForm.username).then((res) => {
         // console.log("res:" + JSON.stringify(res));
         if (res.isExist == true) {
-          //提示
+          // 提示
           this.$message({
             type: 'error',
             message: '用户名重复，请修改用户名!'
@@ -471,11 +581,11 @@ export default {
         }
       })
     },
-    //发送验证码
+    // 发送验证码
     sendCode() {
       if (this.pageType == 1) {
         if (this.registForm.mail == '') {
-          //提示
+          // 提示
           this.$message({
             type: 'error',
             message: '请先输入邮箱，再发送验证码'
@@ -492,7 +602,7 @@ export default {
         }
       } else if (this.pageType == 2) {
         if (this.entertpriseRegistForm.mail == '') {
-          //提示
+          // 提示
           this.$message({
             type: 'error',
             message: '请先输入邮箱，再发送验证码'
@@ -508,14 +618,13 @@ export default {
           }
         }
       }
-
     },
-    //倒计时
+    // 倒计时
     countdown() {
       if (this.pageType == 1) {
         this.countdownNum1--
         if (this.countdownNum1 <= 0) {
-          //停止运行计时
+          // 停止运行计时
           clearInterval(this.interval1)
           this.isCount1 = 0
           this.countdownNum1 = 60
@@ -526,7 +635,7 @@ export default {
       } else if (this.pageType == 2) {
         this.countdownNum2--
         if (this.countdownNum2 <= 0) {
-          //停止运行计时
+          // 停止运行计时
           clearInterval(this.interval2)
           this.isCount2 = 0
           this.countdownNum2 = 60
@@ -542,7 +651,6 @@ export default {
     freshVerificationCode() {
       generateVerificationCode().then(
         res => {
-
           this.verifyCodeImg = res.image
           this.uuid = res.uuid
           console.log('uuid:' + this.uuid)
@@ -550,12 +658,12 @@ export default {
       )
     },
 
-    ////企业注册
-    ///企业详情
+    // //企业注册
+    // /企业详情
     writeEnterpriseDetail() {
       this.enterpriseDetailVisible = true
     },
-    ///图片上传
+    // /图片上传
     openAvatarChangeDialog() {
       this.avatarChangeDialogVisible = true
       this.avatarUrl = ''
@@ -567,7 +675,7 @@ export default {
       this.dialogVisible = true
     },
     beforeUpload(file) {
-      ////判断文件类型和大小是否合适
+      // //判断文件类型和大小是否合适
       const isJPG = file.type === 'image/jpeg' || file.type === 'image/png'
       const isLt2M = file.size / 1024 / 1024 < 10
       if (!isJPG) {
@@ -576,12 +684,12 @@ export default {
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 10MB!')
       }
-      ////获取OSS签名
+      // //获取OSS签名
       return new Promise((resolve, reject) => {
         ossApi.getPolicy()
           .then((response) => {
             console.log('policy response:' + JSON.stringify(response))
-            debugger;
+            debugger
             this.dataObj.policy = response.data.policy
             this.dataObj.signature = response.data.signature
             this.dataObj.ossaccessKeyId = response.data.accessId
@@ -596,7 +704,6 @@ export default {
             reject(false)
           })
       })
-
     },
     handleUploadSuccess(res, file) {
       console.log('上传成功...')
@@ -619,7 +726,7 @@ export default {
      */
     handleEnterpriseRegist() {
       enterpriseRegister(this.entertpriseRegistForm).then((res) => {
-        //提示
+        // 提示
         this.$message({
           type: 'success',
           message: '已经发送企业注册请求，请耐心等候，我们将在七个工作日内为您处理，请关注邮箱通知'
@@ -629,9 +736,7 @@ export default {
   }
 }
 
-
 </script>
-
 
 <style lang="scss" scoped>
 :root {
