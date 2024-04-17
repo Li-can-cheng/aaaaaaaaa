@@ -19,7 +19,7 @@ const store = new Vuex.Store({
   getters,
   plugins: [createPersistedState({
     storage: window.localStorage,  // 指定使用 localStorage 作为存储介质
-    paths: ['user', 'settings', 'permission', 'app']    // 举例，只持久化 user 和 settings 模块
+    paths: ['user', 'settings','permission']    // 举例，只持久化 user 和 settings 模块
   })]
 })
 

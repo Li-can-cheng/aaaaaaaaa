@@ -61,7 +61,7 @@ const actions = {
         commit('SET_NAME', username.trim())
         commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
         commit('SET_INTRODUCTION', 'I am a super administrator')// 权限设置
-        commit('SET_ROLES', ['admin'])// 权限设置
+        // commit('SET_ROLES', ['admin'])// 权限设置
         console.log('aaaaaaaaaaaaaaaaaaaaa',state)
         setToken(data.tokenValue)
         Cookies.set('satoken', data.tokenValue, { expires: 700 }) // 例如这里设置cookie过期时间为7天
@@ -92,7 +92,7 @@ const actions = {
         }
 
         // const { name, avatar } = data
-        const { roles, name, avatar, introduction } = data.data// 权限设置
+        const { roles, userName, avatar, introduction } = data.data// 权限设置
         console.log('roles:', roles)
 
         // 必须保证不是一个空的数组
@@ -101,11 +101,11 @@ const actions = {
         }// 权限设置
         console.log(roles)// 权限设置
         // 存储值
-        commit('SET_NAME', name)
+        commit('SET_NAME', userName)
         commit('SET_ROLES', roles) // 权限设置
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)// 权限设置
-        // resolve(data)
+        // commit('SET_AVATAR', avatar)
+        // commit('SET_INTRODUCTION', introduction)// 权限设置
+        resolve(data)
       }).catch(error => {
         reject(error)
       })
@@ -113,7 +113,7 @@ const actions = {
   },
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout('admin', Cookies.get('satoken')).then((response) => { // 传入Cookies
+      logout(store.getters.name, Cookies.get('satoken')).then((response) => { // 传入Cookies
         console.log('response', response)
         // Cookies.remove('satoken') // 退出登录时清除Cookies
         // commit('SET_ROLES', []) //权限设置
@@ -121,6 +121,7 @@ const actions = {
         resetRouter()
         // Cookies.set('satoken', '') // 退出登录时清除Cookies
         commit('RESET_STATE')
+        commit('SET_ROLES', []);
         resolve()
       }).catch(error => {
         reject(error)

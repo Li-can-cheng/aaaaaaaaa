@@ -53,7 +53,7 @@ const actions = {
       let accessedRoutes
       if (roles.includes('超管')) {
         accessedRoutes = asyncRoutes || []
-      } else if (roles.includes('超管')) { // 通过所属的角色去过滤路由，生成新的路由表
+      } else if (roles.includes('HR')) { // 通过所属的角色去过滤路由，生成新的路由表
         accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       } else {
         accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
