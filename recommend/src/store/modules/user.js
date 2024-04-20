@@ -2,7 +2,7 @@ import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 import Cookies from 'js-cookie'
-import store from '@/store';
+import store from '@/store'
 
 const getDefaultState = () => {
   return {
@@ -10,7 +10,8 @@ const getDefaultState = () => {
     name: '',
     avatar: '',
     roles: [], // 权限设置
-    introduction: '' // 新增
+    introduction: '', // 新增
+    lastestResumeID: '' // 该用户最新的简历文件ID
   }
 }
 const getters = {
@@ -43,8 +44,10 @@ const mutations = {
   // 权限设置
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_ID: (state, id) => {
+    state.lastestResumeID = id
   }
-
 }
 
 const actions = {
@@ -61,6 +64,7 @@ const actions = {
         commit('SET_NAME', username.trim())
         commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
         commit('SET_INTRODUCTION', 'I am a super administrator')// 权限设置
+        commit('SET_ID', data.id)
         // commit('SET_ROLES', ['admin'])// 权限设置
         console.log('aaaaaaaaaaaaaaaaaaaaa',state)
         setToken(data.tokenValue)

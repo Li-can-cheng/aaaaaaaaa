@@ -2,9 +2,9 @@
   <div id=" app">
     <div class="upper-section">
       <div class="dashboard-container">
-        <el-button type="primary" style="margin-left: 40px"@click="openDialog">能力评价</el-button>
-        <el-dialog :title="dialogTitle" :visible.sync="isDialogVisible" width="50%">
-          <ping />
+        <el-button type="primary" style="margin-left: 40px" @click="openDialog">能力评价</el-button>
+        <el-dialog :title="dialogTitle" :visible.sync="isDialogVisible" width="50%" :append-to-body="true">
+          <ping/>
           <div style="text-indent: 2em;">{{ text }}</div>
           <span slot="footer" class="dialog-footer">
             <el-button type="primary" @click="confirmDialog">确定</el-button>
@@ -15,7 +15,7 @@
     <div class="container">
       <div v-if="showTable" class="xing">
         <p>您对该推荐的满意度为
-          <xing />
+          <xing/>
         </p>
       </div>
     </div>
@@ -23,8 +23,9 @@
       <div class="dashboard-container">
         <div class="job_recommend">
           <el-form @submit.prevent="job_recommend">
-            <el-button type="primary" style="margin-bottom: 30px;margin-left: 40px" @click="job_recommend">职位推荐</el-button>
-            <table-component v-if="showTable" :recommendations="recommendations" />
+            <el-button type="primary" style="margin-bottom: 30px;margin-left: 40px" @click="job_recommend">职位推荐
+            </el-button>
+            <table-component v-if="showTable" :recommendations="recommendations"/>
           </el-form>
         </div>
       </div>
@@ -38,8 +39,9 @@ import axios from 'axios'
 import xing from './xing'
 import ping from './ping'
 import TableComponent from './table.vue'
+
 export default {
-  components: { xing, ping, TableComponent },
+  components:{xing, ping, TableComponent},
   // eslint-disable-next-line vue/order-in-components
   data() {
     return {
@@ -47,8 +49,12 @@ export default {
       recommendations: [],
       isDialogVisible: false, // 控制弹出框可见性
       dialogTitle: '能力评价',
-      text: '你好', // 用于存储输出内容
       showTable: false
+    }
+  },
+  computed: {
+    text() {
+      return this.$store.state.evaluation.data ? this.$store.state.evaluation.data.suggestion : '正在加载建议...';
     }
   },
   methods: {
@@ -103,7 +109,6 @@ export default {
           console.log(error)
         })
     }
-
   }
 }
 

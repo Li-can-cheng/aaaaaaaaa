@@ -15,6 +15,9 @@ export default {
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
       const myChart = this.$echarts.init(document.getElementById('myChart'))
+      // 直接从 Vuex store 获取数据
+      const dataValues = this.$store.state.evaluation.data
+
       const dataMax = [
         { name: '教育经历', max: '15' },
         { name: '实习经历', max: '15' },
@@ -54,7 +57,11 @@ export default {
             data: [
               {
                 name: '就业能力',
-                value: [7, 8, 15, 8, 15]
+                value: [dataValues.educationExperienceScore,
+                  dataValues.professionalSkillsScore,
+                  dataValues.workExperienceScore,
+                  dataValues.teamworkAbilityScore,
+                  dataValues.awardExperienceScore]
               }
             ]
           }
