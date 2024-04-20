@@ -39,13 +39,14 @@ import axios from 'axios'
 import xing from './xing'
 import ping from './ping'
 import TableComponent from './table.vue'
+import store from '@/store'
 
 export default {
   components:{xing, ping, TableComponent},
   // eslint-disable-next-line vue/order-in-components
   data() {
     return {
-      id: 10,
+      id: store.getters.resume_id,
       recommendations: [],
       isDialogVisible: false, // 控制弹出框可见性
       dialogTitle: '能力评价',
@@ -75,7 +76,7 @@ export default {
 
       var preDo = {
         method: 'post',
-        url: 'api/algorithm/recommendations/resume_converter', // 确保URL是正确的，并添加了http://前缀
+        url: '/api/algorithm/recommendations/resume_converter', // 确保URL是正确的，并添加了http://前缀
         headers: {
           'Content-Type': 'application/json'
         },

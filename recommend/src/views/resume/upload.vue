@@ -15,7 +15,7 @@
         <h2>上传 PDF 文件</h2>
         <img class="image-container" src="@/assets/resume/pdf.jpg">
         <label for="pdf-file" class="file-label">选择 PDF 文件</label>
-        <input ref="pdfFileInput" id="pdf-file" type="file" accept=".pdf" style="display: none" @change="uploadPdfResume">
+        <input id="pdf-file" ref="pdfFileInput" type="file" accept=".pdf" style="display: none" @change="uploadPdfResume">
         <p v-if="pdfUploadStatus">{{ pdfUploadStatus }}</p>
       </div>
     </div>
