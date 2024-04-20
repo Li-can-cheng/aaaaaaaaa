@@ -56,6 +56,7 @@
 import axios from 'axios'
 import xing from './xing'
 import TableComponent from './table.vue'
+import store from "@/store";
 export default {
   components: { xing, TableComponent },
   // eslint-disable-next-line vue/order-in-components
@@ -73,22 +74,31 @@ export default {
       this.showTable = true
 
       var data = {
-        id: this.id // 使用 this.uid 获取当前的 uid 值
+        id: this.id, // 使用 this.uid 获取当前的 uid 值
+        page: 1,
+        limit: 10
+      }
+      var filter={
+        jobName: this.form.job_intention,
+        education: this.form.ability,
       }
 
       var config = {
         method: 'post',
-        url: 'http://localhost:3012/recommendations/resume_converter', // 确保 URL 是正确的，这里添加了 http:// 前缀
+        url: '/api/algorithm/resumeData/listResumeData', // 确保 URL 是正确的，这里添加了 http:// 前缀
+        withCredentials: true,
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'satoken':store.getters.token
         },
-        data: data
+        params: data,
+        data: filter
       }
 
       axios(config)
         .then((response) => {
           console.log(JSON.stringify(response.data))
-          this.recommendations = response.data.data
+          this.recommendations = response.data.data.list
         })
         .catch((error) => {
           console.log(error)

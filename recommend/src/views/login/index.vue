@@ -363,7 +363,7 @@ export default {
       // //登录
       loginForm: {
         // 用户名
-        username: 'two',
+        username: 'admin',
         // 密码
         password: '123456',
         rememberPwd: false,

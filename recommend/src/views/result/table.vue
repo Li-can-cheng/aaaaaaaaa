@@ -1,33 +1,58 @@
 <template>
-  <table class="content">
-    <thead>
-      <tr>
-        <th style="width: 100px;">职位名称</th>
-        <th style="width: 100px;">公司</th>
-        <th style="width: 100px;">薪资</th>
-        <th style="width: 100px;">类型</th>
-        <th style="width: 100px;">学历</th>
-        <th style="width: 100px;">地址</th>
-        <th style="width: 100px;">技能</th>
-        <th style="width: 100px;">质量</th>
-        <th style="width: 100px;">经验</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="item in recommendations" :key="item.Position">
-        <td style="width: 100px;">{{ item['Job Name'] }}</td>
-        <td style="width: 100px;">{{ item.公司 }}</td>
-        <td style="width: 100px;">{{ item.薪资 }}</td>
-        <td style="width: 100px;">{{ item.类型 }}</td>
-        <td style="width: 100px;">{{ item.学历 }}</td>
-        <td style="width: 100px;">{{ item.地址 }}</td>
-        <td style="width: 100px;">{{ item.技能 }}</td>
-        <td style="width: 100px;">{{ item.质量 }}</td>
-        <td style="width: 100px;">{{ item.经验 }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <el-table
+    :data="recommendations"
+    style="width: 100%"
+    stripe
+    border
+  >
+    <el-table-column
+      prop="jobName"
+      label="职位名称"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="company"
+      label="公司"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="salary"
+      label="薪资"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="title1"
+      label="类型"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="education"
+      label="学历"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="地址"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="skill"
+      label="技能"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="quality"
+      label="品质"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="experience"
+      label="经验"
+      width="180">
+    </el-table-column>
+  </el-table>
 </template>
+
 
 <script>
 export default {
