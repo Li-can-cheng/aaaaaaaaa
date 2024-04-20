@@ -363,7 +363,7 @@ export default {
       // //登录
       loginForm: {
         // 用户名
-        username: 'admin',
+        username: 'two',
         // 密码
         password: '123456',
         rememberPwd: false,
@@ -478,7 +478,7 @@ export default {
       this.$message.error('该微信还未绑定职位推荐系统的账号，请通过账号密码登录')
     }
 
-    this.freshVerificationCode()
+    // this.freshVerificationCode()
 
     console.log('ossPath:' + this.ossPath)
   },
@@ -650,15 +650,15 @@ export default {
     /**
      * 刷新登录验证码
      */
-    freshVerificationCode() {
-      generateVerificationCode().then(
-        res => {
-          this.verifyCodeImg = res.image
-          this.uuid = res.uuid
-          console.log('uuid:' + this.uuid)
-        }
-      )
-    },
+    // freshVerificationCode() {
+    //   generateVerificationCode().then(
+    //     res => {
+    //       this.verifyCodeImg = res.image
+    //       this.uuid = res.uuid
+    //       console.log('uuid:' + this.uuid)
+    //     }
+    //   )
+    // },
 
     // //企业注册
     // /企业详情

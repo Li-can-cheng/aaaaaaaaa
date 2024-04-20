@@ -75,19 +75,19 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/简历/在线简历',
     name: '简历',
-    meta: { title: '简历', icon: 'el-icon-s-help', roles: ['超管'] },
+    meta: { title: '简历', icon: 'el-icon-s-help', roles: ['超管','学生'] },
     children: [
       {
         path: '在线简历',
         name: '在线简历',
         component: () => import('@/views/resume/onlineresume'),
-        meta: { title: '在线简历', icon: 'table', roles: ['超管'] }
+        meta: { title: '在线简历', icon: 'table', roles: ['超管','学生'] }
       },
       {
         path: '简历上传',
         name: '简历上传',
         component: () => import('@/views/resume/upload'),
-        meta: { title: '简历上传', icon: 'tree', roles: ['超管'] }
+        meta: { title: '简历上传', icon: 'tree', roles: ['超管','学生'] }
       }
     ]
   },
@@ -100,7 +100,7 @@ export const asyncRoutes = [
         path: 'index',
         name: '匹配结果',
         component: () => import('@/views/userresult/index'),
-        meta: { title: '匹配结果', icon: 'form', roles: ['超管'] }
+        meta: { title: '匹配结果', icon: 'form', roles: ['超管','学生'] }
       }
     ]
   },
@@ -113,7 +113,7 @@ export const asyncRoutes = [
         path: 'index',
         name: '匹配简历',
         component: () => import('@/views/result/index'),
-        meta: { title: '匹配简历', icon: 'form', roles: ['超管'] }
+        meta: { title: '匹配简历', icon: 'form', roles: ['超管','hr'] }
       }
     ]
   },

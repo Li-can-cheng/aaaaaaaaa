@@ -1,4 +1,4 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+import {asyncRoutes, constantRoutes} from '@/router'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -6,9 +6,18 @@ import { asyncRoutes, constantRoutes } from '@/router'
  * @param route
  */
 function hasPermission(roles, route) {
+  console.log('roles:', roles)
+  console.log('route:', route)
+  // roles = [roles];
   if (route.meta && route.meta.roles) {
+    console.log('111')
+    console.log('route.meta.roles:', route.meta.roles)
+    console.log('333',roles.some(role => route.meta.roles.includes(role)))
     return roles.some(role => route.meta.roles.includes(role))
   } else {
+    console.log('222')
+
+    // console.log('route.meta.roles:', route.meta.roles)
     return true
   }
 }
@@ -18,21 +27,42 @@ function hasPermission(roles, route) {
  * @param routes asyncRoutes
  * @param roles
  */
+// export function filterAsyncRoutes(routes, roles) {
+//   const res = []
+// console.log('routes:', routes)
+//   routes.forEach(route => {
+//     const tmp = {...route}
+//     if (hasPermission(roles, tmp)) {
+//       // console.log('tmp:', tmp)
+//       console.log('hasPermission:', hasPermission(roles, tmp))
+//       if (tmp.children) {
+//         tmp.children = filterAsyncRoutes(tmp.children, roles)
+//       }
+//       res.push(tmp)
+//     }
+//   })
+//
+//   return res
+// }
 export function filterAsyncRoutes(routes, roles) {
-  const res = []
-
-  routes.forEach(route => {
-    const tmp = { ...route }
-    if (hasPermission(roles, tmp)) {
-      if (tmp.children) {
-        tmp.children = filterAsyncRoutes(tmp.children, roles)
+  console.log('routes:', routes)
+  console.log('roles:', roles)
+  return routes.filter(route => {
+    if (hasPermission(roles, route)) {
+      // console.log('hasPermission:', hasPermission(roles, route))
+      if (route.children) {
+        route.children = filterAsyncRoutes(route.children, roles);
       }
-      res.push(tmp)
+      return true;
+      }else if(route.children){
+      route.children = filterAsyncRoutes(route.children, roles);
+      return route.children && route.children.length;
     }
-  })
 
-  return res
+    return false;
+  });
 }
+
 
 const state = {
   routes: [],
@@ -47,17 +77,22 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
+  generateRoutes({commit}, roles) {
     return new Promise(resolve => {
+      console.log('roles:', roles)
+      roles=[roles]
       console.log('roles:', roles)
       let accessedRoutes
       if (roles.includes('超管')) {
+        console.log('11111')
         accessedRoutes = asyncRoutes || []
-      } else if (roles.includes('HR')) { // 通过所属的角色去过滤路由，生成新的路由表
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      } else {
+      } else{ // 通过所属的角色去过滤路由，生成新的路由表
+        console.log('22222')
         accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       }
+      console.log('accessedRoutes:', accessedRoutes)
+      console.log('asyncRoutes:', asyncRoutes)
+      console.log('33333')
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })
