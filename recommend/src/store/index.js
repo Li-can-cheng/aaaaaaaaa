@@ -6,6 +6,7 @@ import app from './modules/app'
 import settings from './modules/settings'
 import user from './modules/user'
 import permission from './modules/permission'
+import evaluation from './modules/evaluation'
 
 Vue.use(Vuex)
 
@@ -14,12 +15,13 @@ const store = new Vuex.Store({
     app,
     settings,
     user,
-    permission
+    permission,
+    evaluation
   },
   getters,
   plugins: [createPersistedState({
-    storage: window.localStorage,  // 指定使用 localStorage 作为存储介质
-    paths: ['user', 'settings','permission']    // 举例，只持久化 user 和 settings 模块
+    storage: window.localStorage, // 指定使用 localStorage 作为存储介质
+    paths: ['user', 'settings', 'permission'] // 举例，只持久化 user 和 settings 模块
   })]
 })
 

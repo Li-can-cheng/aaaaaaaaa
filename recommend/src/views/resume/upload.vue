@@ -5,7 +5,7 @@
         <h2>上传 Word 文件</h2>
         <img class="image-container" src="@/assets/resume/word.png">
         <label for="word-file" class="file-label">选择 Word 文件</label>
-        <input id="word-file" type="file" accept=".doc, .docx" style="display: none" @change="uploadWordResume">
+        <input ref="wordFileInput" id="word-file" type="file" accept=".doc, .docx" style="display: none" @change="uploadWordResume">
         <p v-if="wordUploadStatus">{{ wordUploadStatus }}</p>
       </div>
 
@@ -14,8 +14,8 @@
       <div class="upload-section pdf-upload">
         <h2>上传 PDF 文件</h2>
         <img class="image-container" src="@/assets/resume/pdf.jpg">
-        <label for="pdf-file" class="file-label">选择 pdf 文件</label>
-        <input id="pdf-file" type="file" accept=".pdf" style="display: none" @change="uploadPdfResume">
+        <label for="pdf-file" class="file-label">选择 PDF 文件</label>
+        <input ref="pdfFileInput" id="pdf-file" type="file" accept=".pdf" style="display: none" @change="uploadPdfResume">
         <p v-if="pdfUploadStatus">{{ pdfUploadStatus }}</p>
       </div>
     </div>
@@ -64,104 +64,52 @@ export default {
   },
   methods: {
     uploadWordResume(event) {
-      this.validateAndUpload(event, 'word', ['.doc', '.docx'])
+      this.validateAndUpload(event, 'word', ['.doc', '.docx']);
+      event.target.value = null
     },
     uploadPdfResume(event) {
-      this.validateAndUpload(event, 'pdf', ['.pdf'])
+      this.validateAndUpload(event, 'pdf', ['.pdf']);
+      event.target.value = null
     },
     validateAndUpload(event, fileType, allowedFormats) {
       const file = event.target.files[0]
-
       if (file) {
         const fileName = file.name
-        const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2)
-
+        const fileExtension = fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2);
         if (allowedFormats.includes(`.${fileExtension}`)) {
           this[`${fileType}UploadStatus`] = '正在上传...'
-
-          // 创建 FormData 对象并附加文件
           const formData = new FormData()
           formData.append('file', file)
-
-          // 使用 axios 发送请求
           axios.post('/api/algorithm/resumeData/addAndReturnSuggestions', formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
           })
             .then(response => {
-              // 处理成功响应
-              console.log('上传成功', response)
-              this.data = JSON.parse(response.data.data)
-              console.log('下面是信息：' + this.data)
               this[`${fileType}UploadStatus`] = '上传成功！'
-              this.handleResponse(this.data)
-              // this.updateData();
-              //
-              // // 显示建议文本
-              // document.getElementById('suggestionText').textContent = this.data.suggestion;
-              // console.info(this.data.suggestion);
-              // // 准备雷达图的数据
-              // var radarChartData = {
-              //   legend: {
-              //     data: ['用户评分']
-              //   },
-              //   radar: {
-              //     // 雷达图的指示器，用来表示各个维度
-              //     indicator: [
-              //       {name: '教育经历', max: 10},
-              //       {name: '专业技能', max: 10},
-              //       {name: '工作经历', max: 10},
-              //       {name: '团队合作能力', max: 10},
-              //       {name: '获奖经历', max: 10}
-              //     ]
-              //   },
-              //   series: [{
-              //     name: '评分',
-              //     type: 'radar',
-              //     // 数据值
-              //     data: [
-              //       {
-              //         value: [
-              //           this.data.educationExperienceScore,
-              //           this.data.professionalSkillsScore,
-              //           this.data.workExperienceScore,
-              //           this.data.teamworkAbilityScore,
-              //           this.data.awardExperienceScore
-              //         ],
-              //         name: '用户评分'
-              //       }
-              //     ]
-              //   }]
-              // };
-              //
-              // // 使用指定的配置项和数据显示雷达图
-              // var radarChart = echarts.init(document.getElementById('radarChart'));
-              // radarChart.setOption(radarChartData);
+              this.data = JSON.parse(response.data.data)
+              // 使用 Vuex action 来更新 store
+              this.$store.dispatch('evaluation/updateData', this.data)
+              console.log('上传成功', response)
             })
             .catch(error => {
-              // 处理错误响应
-              console.error('上传失败', error)
               this[`${fileType}UploadStatus`] = '上传失败，请重试。'
+              console.error('上传失败', error)
             })
         } else {
-          this[`${fileType}UploadStatus`] = `请使用规定格式上传（${allowedFormats.join(', ')}）`
+          this[`${fileType}UploadStatus`] = `请使用规定格式上传（${allowedFormats.join(', ')}）`;
         }
+      } else {
+        this[`${fileType}UploadStatus`] = '请选择文件后再上传'
       }
     },
     downloadResumeTemplate() {
-      const resumeTemplatePath = process.env.BASE_URL + '简历模板.doc' // 请根据实际情况替换文件名
-      // 创建一个链接元素
+      const resumeTemplatePath = process.env.BASE_URL + '简历模板.doc'
       const link = document.createElement('a')
-      // 设置链接的 href 属性为简历模板文件的路径
       link.href = resumeTemplatePath
-      // 设置链接的下载属性为简历模板文件的文件名
-      link.download = '简历模板.doc' // 请根据实际情况替换文件名
-      // 将链接添加到文档中
+      link.download = '简历模板.doc'
       document.body.appendChild(link)
-      // 触发点击事件
       link.click()
-      // 删除链接元素
       document.body.removeChild(link)
     }
   }
@@ -183,12 +131,9 @@ export default {
 
 .divider {
   flex: 0 0 1px;
-  /* 设置分隔线为固定宽度 */
   border-left: 2px dashed #ccc;
   margin: 0 20px;
-  /* 分隔线与上传部分的间距 */
   align-self: stretch;
-  /* 使分隔线与上传部分等高 */
 }
 
 input[type="file"] {
@@ -213,9 +158,7 @@ p {
 
 img {
   max-width: 80%;
-  /* 使图片在容器中自适应宽度 */
   max-height: 80%;
-  /* 使图片在容器中自适应高度 */
   margin-top: 30px;
 }
 
@@ -242,7 +185,6 @@ img {
 .expected-position,
 .resume-template-button {
   flex: 1;
-  /* 将空间分配给两个元素 */
 }
 
 .expected-position {
@@ -252,9 +194,8 @@ img {
 }
 
 .resume-template-button {
-  text-align: right;
+  text-align:right;
   font-size: 18px;
   padding: 0px 100px;
-
 }
 </style>
