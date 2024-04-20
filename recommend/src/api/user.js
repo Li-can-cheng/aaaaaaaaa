@@ -22,9 +22,11 @@ export function getInfo(dto, satoken) {
     url: '/api/auth/user/getUserInfo',
     method: 'post',
     withCredentials: true,
+
     headers: {
       'content-type': 'application/json',
-      'satoken': satoken // 关键代码, 注意参数名字是 satoken
+      // 'satoken': satoken,// 关键代码, 注意参数名字是 satoken
+      // 'Authorization': satoken
     },
     data: dto
   })
@@ -37,9 +39,10 @@ export function logout(name, satoken) {
     url: '/api/auth/user/logOut',
     method: 'get',
     withCredentials: true,
+    Authorization: satoken,
     headers: {
       // 'content-type': 'application/x-www-form-urlencoded',
-      'satoken': satoken // 关键代码, 注意参数名字是 satoken
+      // 'satoken': satoken // 关键代码, 注意参数名字是 satoken
     },
     params: {
       userName: name

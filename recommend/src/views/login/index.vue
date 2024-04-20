@@ -342,6 +342,7 @@
 
 <script>
 import verificationCode from './verificationCode.vue'
+import store from "@/store";
 
 export default {
   name: 'SmartSchedulingSystemIndex',
@@ -541,6 +542,7 @@ export default {
         if (valid) {
           this.loading = true
           console.log(this.loginForm)
+          // store.dispatch('user/getInfo')
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             console.log('sbsbsbsbsb')
             this.$router.push({ path: this.redirect || '/' })

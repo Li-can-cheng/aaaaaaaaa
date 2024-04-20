@@ -68,7 +68,7 @@ const actions = {
         // commit('SET_ROLES', ['admin'])// 权限设置
         console.log('aaaaaaaaaaaaaaaaaaaaa',state)
         setToken(data.tokenValue)
-        Cookies.set('satoken', data.tokenValue, { expires: 700 }) // 例如这里设置cookie过期时间为7天
+        Cookies.set('satoken', data.tokenValue, { expires: 700})
         console.log('666', Cookies.get('satoken'))
         console.log('1')
         commit('SET_TOKEN', data.tokenValue)

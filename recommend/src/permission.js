@@ -51,8 +51,15 @@ router.beforeEach(async (to, from, next) => {
         try {
           console.log('执行了3')
           console.log('storeName:', store.getters.name)
+
+          //必须等待，否则会让后端爆炸
+          setTimeout(function() {
+            console.log("这条消息会在一秒后显示");
+          }, 1000);  // 1000毫秒等于1秒
           // get user info 重新获取用户信息
-          await store.dispatch('user/getInfo')
+          await store.dispatch('user/getInfo').catch((error) => {
+            console.log('error:', error)
+          })
           // 权限控制
           // const { roles } = await store.dispatch('user/getInfo')
           console.log('roles:', store.getters.roles)
